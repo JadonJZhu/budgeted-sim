@@ -1,0 +1,7 @@
+.venv/
+reference/
+handoffs/
+__pycache__/
+*.pyc
+cache/
+out/
