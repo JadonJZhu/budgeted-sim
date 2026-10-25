@@ -11,28 +11,26 @@
  "small": 12.0,
  "cue_line": 0.3,
  "qualifying": {
-  "clear": 76,
-  "hit": 89,
-  "crowd": 75,
-  "k12": 20,
-  "k23": 20
+  "2": 25,
+  "1": 13,
+  "3": 12
  },
  "chosen": {
   "clear": [
-   20649,
-   3331
+   39869,
+   65875
   ],
   "hit": [
-   1922,
-   1341
+   1117,
+   10129
   ],
   "crowd": [
-   191430,
-   23451
+   48518,
+   10188
   ],
   "k12": [
-   2808,
-   441132
+   441132,
+   2808
   ],
   "k23": [
    433601,
@@ -40,24 +38,32 @@
   ]
  },
  "worst_cue": [
-  -0.6324555320336759,
-  "collisions",
-  "own_gap"
+  -0.48191893464334495,
+  "balls",
+  "vs_crowd"
  ],
- "swaps": 36,
- "across_set_cue_r": {
-  "closest_A_B~vs_full": -0.72,
-  "closest_A_B~vs_how": -0.4,
-  "closest_A_B~vs_crowd": -0.76,
-  "collisions~vs_full": 0.2,
-  "collisions~vs_how": -0.06,
-  "collisions~vs_crowd": 0.09,
-  "balls~vs_full": 0.02,
-  "balls~vs_how": 0.03,
-  "balls~vs_crowd": -0.13,
-  "A_near_B_path~vs_full": 0.59,
-  "A_near_B_path~vs_how": 0.32,
-  "A_near_B_path~vs_crowd": 0.59
+ "swaps": 113,
+ "cue_r": {
+  "closest_A_B~vs_full": -0.45,
+  "closest_A_B~vs_how": 0.33,
+  "closest_A_B~vs_crowd": -0.24,
+  "closest_A_B~k1_k2": -0.29,
+  "closest_A_B~k2_k3": -0.0,
+  "collisions~vs_full": 0.09,
+  "collisions~vs_how": -0.33,
+  "collisions~vs_crowd": -0.32,
+  "collisions~k1_k2": -0.21,
+  "collisions~k2_k3": -0.23,
+  "balls~vs_full": -0.09,
+  "balls~vs_how": -0.08,
+  "balls~vs_crowd": -0.48,
+  "balls~k1_k2": -0.3,
+  "balls~k2_k3": -0.16,
+  "A_near_B_path~vs_full": 0.39,
+  "A_near_B_path~vs_how": -0.33,
+  "A_near_B_path~vs_crowd": 0.25,
+  "A_near_B_path~k1_k2": 0.46,
+  "A_near_B_path~k2_k3": 0.0
  },
  "recovery": {
   "full": {
@@ -85,5 +91,16 @@
    "k_share": 1.0
   }
  },
- "recovery_passed": true
+ "recovery_passed": true,
+ "mixed_k_population": {
+  "k_shares": {
+   "2": 25,
+   "1": 13,
+   "3": 12
+  },
+  "model_share": 1.0,
+  "k_counts": {
+   "2": 200
+  }
+ }
 }

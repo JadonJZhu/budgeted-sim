@@ -11,75 +11,81 @@
  "small": 12.0,
  "cue_line": 0.3,
  "qualifying": {
-  "clear": 69,
-  "hit": 78,
-  "crowd": 65,
-  "k12": 19,
-  "k23": 17
+  "2": 25,
+  "1": 13,
+  "3": 12
  },
  "chosen": {
   "clear": [
-   20649,
-   3331,
    2775,
-   43617,
-   5292,
-   3095,
-   53914,
-   19423
+   18239,
+   19610,
+   28791,
+   33478,
+   57118,
+   22519,
+   15929
   ],
   "hit": [
    1922,
-   1341,
-   303,
    2702,
    3994,
-   1117,
-   7714,
-   5090
+   5090,
+   4278,
+   4979,
+   5142,
+   5828
   ],
   "crowd": [
    191430,
-   23451,
-   275300,
-   361131,
-   80427,
-   134477,
-   139339,
-   145944
+   176165,
+   179733,
+   310019,
+   121624,
+   362289,
+   69048,
+   67330
   ],
   "k12": [
-   177709,
-   204162,
-   2309,
-   2808
+   1929,
+   278469,
+   441132,
+   2309
   ],
   "k23": [
-   388175,
-   87287,
+   380968,
+   433601,
    33199,
-   46109
+   37085
   ]
  },
  "worst_cue": [
-  -0.2986160608055249,
-  "closest_A_B",
-  "own_gap"
+  -0.2550177874885054,
+  "collisions",
+  "vs_how"
  ],
- "swaps": 14,
- "across_set_cue_r": {
-  "closest_A_B~vs_full": -0.66,
-  "closest_A_B~vs_how": -0.39,
-  "closest_A_B~vs_crowd": -0.69,
-  "collisions~vs_full": 0.11,
-  "collisions~vs_how": -0.1,
-  "collisions~vs_crowd": -0.1,
-  "balls~vs_full": -0.16,
-  "balls~vs_how": -0.07,
-  "balls~vs_crowd": -0.26,
-  "A_near_B_path~vs_full": 0.51,
-  "A_near_B_path~vs_how": 0.4,
-  "A_near_B_path~vs_crowd": 0.59
+ "swaps": 77,
+ "cue_r": {
+  "closest_A_B~vs_full": -0.1,
+  "closest_A_B~vs_how": -0.19,
+  "closest_A_B~vs_crowd": -0.03,
+  "closest_A_B~k1_k2": -0.07,
+  "closest_A_B~k2_k3": -0.15,
+  "collisions~vs_full": -0.07,
+  "collisions~vs_how": -0.26,
+  "collisions~vs_crowd": -0.12,
+  "collisions~k1_k2": -0.16,
+  "collisions~k2_k3": -0.0,
+  "balls~vs_full": -0.1,
+  "balls~vs_how": -0.17,
+  "balls~vs_crowd": -0.17,
+  "balls~k1_k2": -0.09,
+  "balls~k2_k3": 0.0,
+  "A_near_B_path~vs_full": 0.23,
+  "A_near_B_path~vs_how": 0.19,
+  "A_near_B_path~vs_crowd": 0.24,
+  "A_near_B_path~k1_k2": -0.0,
+  "A_near_B_path~k2_k3": -0.0
  },
  "recovery": {
   "full": {
@@ -107,5 +113,17 @@
    "k_share": 1.0
   }
  },
- "recovery_passed": true
+ "recovery_passed": true,
+ "mixed_k_population": {
+  "k_shares": {
+   "2": 25,
+   "1": 13,
+   "3": 12
+  },
+  "model_share": 1.0,
+  "k_counts": {
+   "2": 199,
+   "3": 1
+  }
+ }
 }

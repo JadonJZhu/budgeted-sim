@@ -15,7 +15,7 @@ Coordinates use the physics engine's convention: the origin is the bottom left c
 | Step limit | the run ends once the step counter passes 700 (14 seconds) | Code: `World.end_clip` |
 | Top wall | a box spanning x 0 to 1000, y 725 to 750 | Code: `World.__init__` |
 | Bottom wall | a box spanning x 0 to 1000, y −2.5 to 22.5 (drawn on screen as 0 to 25) | Code: `World.__init__` |
-| Left wall | a 25 pixel thick wall at x 0 to 25, made of four boxes, with one opening between y 258.34 and 491.67: the gate | Code: `World.__init__` |
+| Left wall | a 25 pixel thick wall at x 0 to 25, made of four boxes. The opening between y 258.34 and 491.67 is the gate. The boxes also leave two gaps of about 37.5 pixels (y 122.9 to 160.4 and 589.6 to 627.1), narrower than a ball, so no ball can pass through them | Code: `World.__init__` |
 | Gate drawing | a red rectangle at x 0 to 25, y 258 to 492 | Code: `World.animation_step` |
 | Right side | open: no wall | Code: `World.__init__` |
 | Wall material | elasticity 1, friction 0 | Code: `World.add_wall` |
@@ -56,7 +56,7 @@ Coordinates use the physics engine's convention: the origin is the bottom left c
 - Within a step, the order is: apply any counterfactual change, record positions, check for the end, then advance the physics by one step. (Code: `World.simulate`.)
 - Each video's whether score is the mean, over replays, of (real outcome − counterfactual outcome), which for these videos is the share of replays in which B misses. 1,000 replays per video. (Paper, Modeling; Code: `whether_test`, `fit_model.py`.)
 - θ is fit on a grid from 0 to 5 in steps of 0.1 by least squares between 100 × score and the mean flipped whether rating, with no other scaling. Best fit: θ = 1.9. (Paper, Modeling; Code: `fit_model.py`.)
-- Reported fit at θ = 1.9: r = .694 and RMSE = 28.11 in the text; Figure 5 prints r = 0.684 with the same RMSE. The repository's `fitting_results.csv` gives r = .684, so .694 in the text looks like a typo. We treat .69 as the target, within our run to run spread. (Paper, Results and Figure 5; Code: `fitting_results.csv`.)
+- Reported fit at θ = 1.9: r = .694 and RMSE = 28.11 in the text; Figure 5 prints r = 0.684 with the same RMSE. The repository's `fitting_results.csv` gives r = .684, so .694 in the text looks like a typo. Run with 20 random seeds, the original code gives r = .674 (range .667 to .682), so .684 was a high draw; our simulator gives .670 (range .664 to .679). See README, Our simulator. (Paper, Results and Figure 5; Code: `fitting_results.csv`.)
 
 ## How test
 

@@ -11,30 +11,28 @@
  "small": 12.0,
  "cue_line": 0.3,
  "qualifying": {
-  "clear": 76,
-  "hit": 89,
-  "crowd": 75,
-  "k12": 20,
-  "k23": 20
+  "2": 25,
+  "1": 13,
+  "3": 12
  },
  "chosen": {
   "clear": [
-   20649,
-   3331,
-   2775,
-   43617
+   48126,
+   64127,
+   69048,
+   22519
   ],
   "hit": [
-   1922,
-   1341,
-   303,
-   2702
+   1117,
+   10129,
+   15662,
+   8745
   ],
   "crowd": [
-   191430,
-   23451,
-   275300,
-   361131
+   176165,
+   376506,
+   15929,
+   10188
   ],
   "k12": [
    2808,
@@ -42,28 +40,36 @@
   ],
   "k23": [
    433601,
-   66061
+   38613
   ]
  },
  "worst_cue": [
-  -0.42640143271122083,
-  "collisions",
-  "own_gap"
+  -0.46359005606575276,
+  "balls",
+  "vs_crowd"
  ],
- "swaps": 36,
- "across_set_cue_r": {
-  "closest_A_B~vs_full": -0.63,
-  "closest_A_B~vs_how": -0.31,
-  "closest_A_B~vs_crowd": -0.59,
-  "collisions~vs_full": 0.16,
-  "collisions~vs_how": -0.32,
-  "collisions~vs_crowd": -0.22,
-  "balls~vs_full": -0.05,
-  "balls~vs_how": -0.19,
-  "balls~vs_crowd": -0.32,
-  "A_near_B_path~vs_full": 0.53,
-  "A_near_B_path~vs_how": 0.3,
-  "A_near_B_path~vs_crowd": 0.48
+ "swaps": 115,
+ "cue_r": {
+  "closest_A_B~vs_full": -0.17,
+  "closest_A_B~vs_how": -0.14,
+  "closest_A_B~vs_crowd": -0.2,
+  "closest_A_B~k1_k2": -0.34,
+  "closest_A_B~k2_k3": -0.2,
+  "collisions~vs_full": -0.34,
+  "collisions~vs_how": -0.08,
+  "collisions~vs_crowd": -0.45,
+  "collisions~k1_k2": -0.12,
+  "collisions~k2_k3": -0.06,
+  "balls~vs_full": -0.21,
+  "balls~vs_how": -0.14,
+  "balls~vs_crowd": -0.46,
+  "balls~k1_k2": -0.2,
+  "balls~k2_k3": 0.1,
+  "A_near_B_path~vs_full": 0.19,
+  "A_near_B_path~vs_how": -0.06,
+  "A_near_B_path~vs_crowd": 0.16,
+  "A_near_B_path~k1_k2": 0.36,
+  "A_near_B_path~k2_k3": 0.36
  },
  "recovery": {
   "full": {
@@ -91,5 +97,16 @@
    "k_share": 1.0
   }
  },
- "recovery_passed": true
+ "recovery_passed": true,
+ "mixed_k_population": {
+  "k_shares": {
+   "2": 25,
+   "1": 13,
+   "3": 12
+  },
+  "model_share": 1.0,
+  "k_counts": {
+   "2": 200
+  }
+ }
 }

@@ -11,22 +11,20 @@
  "small": 12.0,
  "cue_line": 0.4,
  "qualifying": {
-  "clear": 69,
-  "hit": 78,
-  "crowd": 68,
-  "k12": 19,
-  "k23": 17
+  "2": 25,
+  "1": 13,
+  "3": 12
  },
  "chosen": {
   "clear": [
-   20649,
-   3331,
    2775,
    43617,
-   5292,
    3095,
    53914,
-   19423
+   6030,
+   18239,
+   19610,
+   20388
   ],
   "hit": [
    1922,
@@ -40,46 +38,54 @@
   ],
   "crowd": [
    191430,
-   23451,
-   275300,
-   361131,
-   80427,
-   134477,
-   139339,
-   145944
+   297612,
+   176165,
+   179733,
+   310019,
+   398033,
+   340892,
+   121624
   ],
   "k12": [
    177709,
    204162,
    1929,
-   2186
+   219
   ],
   "k23": [
-   388175,
-   87287,
    21500,
-   1184
+   380968,
+   433601,
+   15086
   ]
  },
  "worst_cue": [
-  -0.3935544723212141,
+  -0.38127192547620004,
   "closest_A_B",
-  "own_gap"
+  "k2_k3"
  ],
- "swaps": 4,
- "across_set_cue_r": {
-  "closest_A_B~vs_full": -0.64,
-  "closest_A_B~vs_how": -0.33,
-  "closest_A_B~vs_crowd": -0.65,
-  "collisions~vs_full": 0.11,
-  "collisions~vs_how": -0.25,
-  "collisions~vs_crowd": -0.2,
-  "balls~vs_full": -0.17,
-  "balls~vs_how": -0.18,
-  "balls~vs_crowd": -0.32,
-  "A_near_B_path~vs_full": 0.51,
-  "A_near_B_path~vs_how": 0.4,
-  "A_near_B_path~vs_crowd": 0.59
+ "swaps": 25,
+ "cue_r": {
+  "closest_A_B~vs_full": -0.37,
+  "closest_A_B~vs_how": 0.02,
+  "closest_A_B~vs_crowd": -0.26,
+  "closest_A_B~k1_k2": -0.23,
+  "closest_A_B~k2_k3": -0.38,
+  "collisions~vs_full": 0.0,
+  "collisions~vs_how": -0.21,
+  "collisions~vs_crowd": -0.23,
+  "collisions~k1_k2": 0.03,
+  "collisions~k2_k3": 0.0,
+  "balls~vs_full": -0.06,
+  "balls~vs_how": 0.08,
+  "balls~vs_crowd": -0.24,
+  "balls~k1_k2": 0.05,
+  "balls~k2_k3": 0.17,
+  "A_near_B_path~vs_full": 0.24,
+  "A_near_B_path~vs_how": 0.36,
+  "A_near_B_path~vs_crowd": 0.31,
+  "A_near_B_path~k1_k2": -0.0,
+  "A_near_B_path~k2_k3": 0.23
  },
  "recovery": {
   "full": {
@@ -107,5 +113,17 @@
    "k_share": 1.0
   }
  },
- "recovery_passed": true
+ "recovery_passed": true,
+ "mixed_k_population": {
+  "k_shares": {
+   "2": 25,
+   "1": 13,
+   "3": 12
+  },
+  "model_share": 1.0,
+  "k_counts": {
+   "2": 199,
+   "3": 1
+  }
+ }
 }

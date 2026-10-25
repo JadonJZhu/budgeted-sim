@@ -13,9 +13,9 @@ Selection is by fixed rules, so no scene is picked by hand:
   over ball-count bins (3 to 4, 5 to 7, 8 to 9) so they spread across crowding.
   A scene is used at most once.
 - Simple-cue check: across the chosen scenes, none of the cues may correlate
-  with the budget model's predicted gap to any rival above |r| = cue. If one
-  does, the scene that contributes most to that correlation is swapped for the
-  next qualifying scene of its kind, and the check repeats.
+  with the budget model's predicted gap to any rival (or between budget sizes)
+  above |r| = cue. If one does, the scene that contributes most is swapped for
+  the next qualifying scene of its kind and direction, and the check repeats.
 """
 import json
 import os
@@ -27,7 +27,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from fit.data import HERE, balls, ratings, scenes  # noqa: E402
 from fit.evaluate import full_fit, grids, scale_fit  # noqa: E402
-from scenes.recovery import recover, residual_pool  # noqa: E402
+from scenes.recovery import recover, recover_mixed  # noqa: E402
 from scenes.screen import KINDS, NEED, crowd_thetas, direction, gaps, kind_of, margin, slots  # noqa: E402
 from sim.models import Real  # noqa: E402
 from sim.physics import simulate  # noqa: E402
@@ -109,53 +109,45 @@ def model_gaps(c):
             "k2_k3": np.mean(p["k2"]) - np.mean(p["k3"])}
 
 
-# each kind's own comparison
-OWN = {"clear": "vs_full", "hit": "vs_how", "crowd": "vs_crowd", "k12": "k1_k2", "k23": "k2_k3"}
 CUES = ("closest_A_B", "collisions", "balls", "A_near_B_path")
+GAPS = ("vs_full", "vs_how", "vs_crowd", "k1_k2", "k2_k3")
 
 
 def cue_table(chosen):
     rows = []
     for kind, cs in chosen.items():
         for c in cs:
-            g = model_gaps(c)
-            rows.append({"id": c["id"], "kind": kind, **cues(c), **g, "own_gap": g[OWN[kind]]})
+            rows.append({"id": c["id"], "kind": kind, **cues(c), **model_gaps(c)})
     return pd.DataFrame(rows)
 
 
-def within_z(df, col):
-    g = df.groupby("kind")[col]
-    sd = g.transform("std").replace(0, np.nan)
-    return ((df[col] - g.transform("mean")) / sd).fillna(0)
+def z(x):
+    sd = x.std()
+    return (x - x.mean()) / sd if sd > 0 else x * 0
 
 
 def worst_cue(df):
-    """Pass line: the pooled within-kind correlation between each cue and the
-    size of that kind's own model disagreement. Differences between kinds are
-    built in by design (in 'hit' scenes A touches B, which is exactly what the
-    how-only model uses), so they are reported separately, not gated."""
-    worst = (0, None, "own_gap")
-    gz = within_z(df, "own_gap")
+    """The largest correlation, across the whole set, between a crude cue and
+    the budget model's gap to any rival (or between budget sizes)."""
+    worst = (0.0, None, None)
     for cue in CUES:
-        cz = within_z(df, cue)
-        if cz.std() == 0 or gz.std() == 0:
-            continue
-        r = float(np.corrcoef(cz, gz)[0, 1])
-        if abs(r) > abs(worst[0]):
-            worst = (r, cue, "own_gap")
+        for gap in GAPS:
+            if df[cue].std() == 0 or df[gap].std() == 0:
+                continue
+            r = float(np.corrcoef(df[cue], df[gap])[0, 1])
+            if abs(r) > abs(worst[0]):
+                worst = (r, cue, gap)
     return worst
 
 
-def across_set(df):
-    out = {}
-    for cue in CUES:
-        for gap in ("vs_full", "vs_how", "vs_crowd"):
-            if df[cue].std() > 0:
-                out[f"{cue}~{gap}"] = round(float(np.corrcoef(df[cue], df[gap])[0, 1]), 2)
-    return out
+def all_cue_r(df):
+    return {f"{c}~{g}": round(float(np.corrcoef(df[c], df[g])[0, 1]), 2)
+            for c in CUES for g in GAPS if df[c].std() > 0 and df[g].std() > 0}
 
 
-def cue_check(qual, line, max_swaps=200):
+def cue_check(qual, line, max_swaps=300):
+    """Swap scenes (same kind and direction, next in line) until no cue passes
+    the line, or no swap helps."""
     chosen = pick(qual)
     swaps, dropped = 0, set()
     while True:
@@ -163,12 +155,10 @@ def cue_check(qual, line, max_swaps=200):
         r, cue, gap = worst_cue(df)
         if abs(r) < line or swaps >= max_swaps:
             return chosen, df, (r, cue, gap), swaps
-        # swap the scene contributing most to this correlation that still has
-        # an unused replacement of the same kind and direction
-        z = (within_z(df, cue) * within_z(df, gap) * np.sign(r)).sort_values(ascending=False)
+        contrib = (z(df[cue]) * z(df[gap]) * np.sign(r)).sort_values(ascending=False)
         used = {c["id"] for cs in chosen.values() for c in cs} | dropped
-        for i in z.index:
-            if z[i] <= 0:
+        for i in contrib.index:
+            if contrib[i] <= 0:
                 return chosen, df, (r, cue, gap), swaps
             bad = df.loc[i]
             kind = bad.kind
@@ -223,22 +213,25 @@ def recovery_grids(chosen, cfg, pred, G_orig, videos):
 
 
 def generators(models, G_orig, y, rule):
-    """Each model at its best fit to the existing data, with its fitted scale.
-    The budget model contributes one generator per k."""
+    """Each model at its best setting on the existing data. The budget model
+    contributes one generator per k. Returns (label, model, k, p on the test
+    set, p on the 20 original videos)."""
+    def row_of(name, st):
+        if st not in models[name][0]:
+            raise ValueError(f"{name} setting {st} is not in the test-set grid")
+        return models[name][0].index(st)
+
     out = []
     for name in ("full", "how", "crowding"):
-        s, a, b, _ = full_fit(G_orig[name], y)
+        s, *_ = full_fit(G_orig[name], y)
         st = G_orig[name][0][s]
-        row = models[name][0].index(st) if st in models[name][0] else 0
-        out.append((name, name, None, a + b * models[name][1][row]))
+        out.append((name, name, None, models[name][1][row_of(name, st)], G_orig[name][1][s]))
+    s_all, P_all = G_orig["budget"]
     for k in (1, 2, 3):
-        s_all, P_all = G_orig["budget"]
         keep = [i for i, st in enumerate(s_all) if st["k"] == k and st["rule"] == rule]
-        a, b, sse = scale_fit(P_all[keep], y, np.ones(len(y)))
-        i = int(np.argmin(sse))
-        st = s_all[keep[i]]
-        row = models["budget"][0].index(st)
-        out.append((f"budget_k{k}", "budget", k, a[i] + b[i] * models["budget"][1][row]))
+        _, _, sse = scale_fit(P_all[keep], y, np.ones(len(y)))
+        i = keep[int(np.argmin(sse))]
+        out.append((f"budget_k{k}", "budget", k, models["budget"][1][row_of("budget", s_all[i])], P_all[i]))
     return out
 
 
@@ -261,15 +254,23 @@ def main(big=40, small=12, line=0.3, write=True, scale=1.0):
     y = wide.mean().to_numpy()
     G = grids(pred, videos)
     models = recovery_grids(chosen, cfg, pred, G, videos)
-    rec = recover(models, generators(models, G, y, cfg["rule"]), residual_pool(wide))
+    gens = generators(models, G, y, cfg["rule"])
+    rec = recover(models, gens, wide.to_numpy())
     print("recovery", rec, flush=True)
+    # a population mixing budget sizes in the proportions of the per-person fits
+    ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
+    counts = {int(k): v for k, v in ev["per_person"]["k_counts_all"].items()}
+    parts = [(counts.get(k, 0), g[3], g[4]) for g in gens if g[1] == "budget" for k in [g[2]]]
+    mixed = recover_mixed(models, parts, wide.to_numpy())
+    print("mixed-k population", counts, mixed, flush=True)
     passed = all(v["model_share"] >= 0.9 and (v["k_share"] is None or v["k_share"] >= 0.8)
                  for v in rec.values())
     result = {"scale": scale, "need": dict(NEED), "big": big, "small": small, "cue_line": line, "qualifying": counts,
               "chosen": {k: [c["id"] for c in v] for k, v in chosen.items()},
               "worst_cue": [float(worst[0]), worst[1], worst[2]], "swaps": swaps,
-              "across_set_cue_r": across_set(df),
-              "recovery": rec, "recovery_passed": passed}
+              "cue_r": all_cue_r(df),
+              "recovery": rec, "recovery_passed": passed,
+              "mixed_k_population": {"k_shares": counts, **mixed}}
     if write:
         tag = f"{big:g}_{small:g}_{line:g}" + ("" if scale == 1 else f"_x{scale:g}")
         out = os.path.join(HERE, "results", f"selection_{tag}.json")

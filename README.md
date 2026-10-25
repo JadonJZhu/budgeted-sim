@@ -15,11 +15,11 @@ Each model maps its prediction p (the share of imagined replays in which B misse
 | How only | No simulation: B "would have missed" only if A touched B through a chain of contacts | 24.3 | .59 |
 | Full CSM | Full re-simulation, with noise on the ball A hit first (the published model) | 25.1 | .55 |
 
-- **Best budget:** 2 balls, filled with B and then the first ball A hit in the real video. This choice won in all 20 cross-validation folds over budgets of 1 and 3 and over "every ball" (which is the full CSM).
+- **Best budget:** 2 balls, filled with B and then the first ball A hit in the real video. This was the setting chosen in all 20 cross-validation folds, over budgets of 1 and 3 and over "every ball" (which is the full CSM). On held-out error alone, a budget of 1 does as well (18.2), so the existing data do not pin down the budget size.
 - **Not decisive:** resampling the 50 participants 1,000 times, the budget model beats the full CSM in 96% of resamples (gap −5.4 points, 95% interval −10.8 to +0.6), crowding noise in 81% (−2.7, interval −7.4 to +2.8) and how only in 87% (−4.2, interval −11.4 to +2.6). We set a 95% interval excluding zero as the bar before fitting, and the result does not clear it.
 - **Crowding:** the budget model's error does not grow with the number of balls (slope −0.8 points per ball, interval −2.2 to +0.6).
-- **Individuals:** fitting each participant separately, the budget model fits 34% best, how only 28%, crowding noise 28% and the full CSM 10%. Their best budgets: 1 ball for 13 people, 2 for 25, 3 for 12.
-- **Cause ratings:** the authors' proposed next step weights the whether and how answers by people's certainty. That model predicts the cause ratings better with the budget model's whether answers (held-out error 16.7) than with the CSM's (18.3).
+- **Individuals:** fitting each participant separately, the budget model fits 34% best, how only 28%, crowding noise 28% and the full CSM 10%. Across all 50 people, the best budget is 1 ball for 13, 2 for 25 and 3 for 12.
+- **Cause ratings:** the authors' proposed next step weights the whether and how answers by people's certainty. That model predicts the cause ratings better with the budget model's whether answers (held-out error 16.7) than with the CSM's (18.3). The whether settings used here were fit on all 20 videos, so this comparison is slightly optimistic for both.
 
 Full numbers are in `results/evaluation.json`.
 
@@ -27,7 +27,7 @@ Full numbers are in `results/evaluation.json`.
 
 Remove A. Re-simulate B and up to k − 1 other balls, chosen by a rule that uses only what the real video shows (we tested three: balls A touched, balls that touched B, and balls that came closest to B's path). Every other ball is reset to its recorded position and velocity at each time step. It therefore follows its real path exactly and is never pushed off it, but it still pushes any re-simulated ball it meets, with the force of a real ball. As in the CSM, direction noise goes on the ball A hit first, if that ball is in the budget.
 
-With k = 1, B's imagined path can differ from its real path only if A touched B through some chain of contacts, so the whether answer becomes the how answer. With every ball in the budget, the model is the full CSM. In the 9-ball video below, A clears two balls (E and F) out of B's way. A full simulation without A sends E and F into B, and B misses. A budget of B and E leaves F on the path A really sent it, and B still goes in, which is what people said.
+Because the replayed balls already carry A's effects, with k = 1 B's imagined path can differ from its real path only if A hit B directly, and the model says A mattered only when that hit decided whether B went in. A's influence through chains of other balls drops out. With every ball in the budget, the model is the full CSM. In the 9-ball video below, A clears two balls (E and F) out of B's way. A full simulation without A sends E and F into B, and B misses. A budget of B and E leaves F on the path A really sent it, and B still goes in, which is what people said.
 
 ![The 9-ball video](writeup/figures/nine_ball.png)
 
@@ -35,21 +35,21 @@ With k = 1, B's imagined path can differ from its real path only if A touched B 
 
 `scenes/final/` holds 36 videos a lab could run with the original whether question: 32 new scenes and 4 original videos as anchors. `PLAN.md` there is a pre-registration-style plan (hypotheses, analysis, pass and fail lines, known weak spots).
 
-The new scenes were chosen by fixed rules from 500,000 random scenes in the style of the originals, of which 37,167 passed the original videos' constraints. A scene qualifies when two models differ by at least 40 rating points at every setting the existing data cannot rule out.
+The new scenes were chosen by fixed rules from 500,000 random scenes in the style of the originals, of which 37,167 passed the original videos' constraints. Scenes in which A or B passes within 6 pixels of another ball without touching it were left out, since a viewer could not tell whether they touched. A scene qualifies when two models' predicted probabilities differ by at least 40 points at every setting the existing data cannot rule out: budgets of 1 to 3 balls, and every noise level on the paper's grid (0 to 5 degrees) whose fit is inside the 95% bootstrap interval of the best fit's error. The budget model's noise range is that of its best budget (2), used for all three sizes. At the fitted rating scales, the which-model scenes separate the models by 41 to 47 rating points on average.
 
 | Kind of scene | Scenes | Budget | Full CSM | Crowding | How only |
 | --- | --- | --- | --- | --- | --- |
-| Clear the way: A removes a ball that would have blocked B | 8 | 25 | 73 | 60 | 50 |
-| Budget vs. crowding noise | 8 | 25 | 73 | 74 | 61 |
-| Hit but no difference: A hits B, B would have gone in anyway | 8 | 25 | 16 | 21 | 66 |
-| Budget of 1 vs. 2, and 2 vs. 3 (half in each direction) | 8 | 25 or 83 | 45 | 52 | 66 |
+| Clear the way: A removes a ball that would have blocked B | 8 | 25 | 73 | 66 | 56 |
+| Budget vs. crowding noise | 8 | 25 | 66 | 69 | 50 |
+| Hit but no difference: A hits B, B would have gone in anyway | 8 | 25 | 16 | 16 | 66 |
+| Budget of 1 vs. 2, and 2 vs. 3 (half in each direction) | 8 | 25 or 83 | 48 | 56 | 66 |
 | Original videos | 4 | 54 | 62 | 41 | 45 |
 
 Values are each model's mean predicted rating at its best fit to the existing data (`scenes/final/summary.csv`; every setting is in `predictions.csv`).
 
-- **Power:** in 200 simulated studies of 50 people, the generating model and its budget size were recovered every time, for every model and for budgets of 1, 2 and 3.
-- **Simple cues:** within each kind, no crude cue (A's closest approach to B, number of collisions or balls, A passing near B's path) tracks the size of the model disagreement above |r| = .3. Across kinds, A's closest approach to B does (r = −.66), so a "did A get near B" rule should be added as one more rival when the data come in.
-- **Robustness:** the same scenes are chosen with a 30 or 50 point bar instead of 40, and recovery is unchanged. A stricter cue line of .2 cannot be met (best .27).
+- **Simple cues:** across the 36 scenes, no crude cue (A's closest approach to B, number of collisions, number of balls, whether A passes within a ball width of B's path) correlates with any model's disagreement with the budget model above |r| = .3 (largest .26). Getting there took 78 rule-based swaps. Half-size and quarter-size sets could not get under .3, which is why the set has 36 scenes.
+- **Power:** we simulated 200 studies of 50 people from each model. Each fake person copies one real participant's slider scale and noise (fit to their 20 ratings under the generating model). The generating model won every study, and the budget size was recovered every time for budgets of 1, 2 and 3. A population mixing budgets in the proportions of the per-person fits (13, 25 and 12 people) was identified as a budget population every time, with k = 2 in 199 of 200 studies. These studies assume each person follows one model, so they show the scenes can separate the models, not that real data will be this clean.
+- **Other bars:** the same result holds with a 30 or 50 point bar instead of 40, and with a cue line of .4. A stricter cue line of .2 cannot be met (best .28).
 
 ## Our simulator
 
@@ -58,7 +58,7 @@ The original repository has no licence file, so we did not copy or import its co
 Checks against the original:
 
 - The noise-free counterfactual outcome and the how answer match the original in all 20 videos.
-- At θ = 1.9 (1,000 replays per video, 20 random seeds) our CSM correlates with people's mean whether ratings at r = .670 (range .664 to .679). The original code run the same way gives .674 (range .667 to .682). Per video the two agree within 1 point. The paper reports .684 (and .694 in the text), which is above the original code's own seed range.
+- At θ = 1.9 (1,000 replays per video, 20 random seeds) our CSM correlates with people's mean whether ratings at r = .670 (range .664 to .679; `results/reproduction.csv`). The original code, run locally the same way, gives .674 (range .667 to .682; its predictions are in `results/original_code_seeds.csv`, the code itself is not included). Per video the two agree within 1 point. The paper reports .684 (and .694 in the text), which is above the original code's own seed range.
 
 ## Repository layout
 
@@ -91,4 +91,4 @@ python scenes/finalize.py results/selection_40_12_0.3.json
 
 ## Credit
 
-Scenes and ratings: Lu, Bechlivanidis & Gerstenberg (2026), "Causal judgments in complex situations", CogSci 2026; materials at github.com/cicl-stanford/complex_causation_cogsci2026. The capacity limit motivating the budget: Balaban & Ullman (2025), "The capacity limits of moving objects in the imagination", Nature Communications.
+Scenes and ratings, including the four anchor scenes copied into `scenes/final/test_scenes.json`: Lu, Bechlivanidis & Gerstenberg (2026), "Causal judgments in complex situations", CogSci 2026; materials at github.com/cicl-stanford/complex_causation_cogsci2026. The capacity limit motivating the budget: Balaban & Ullman (2025), "The capacity limits of moving objects in the imagination", Nature Communications.

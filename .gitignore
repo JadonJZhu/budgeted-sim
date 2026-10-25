@@ -6,3 +6,6 @@ __pycache__/
 cache/
 out/
 scenes/work/
+writeup/*.aux
+writeup/*.log
+writeup/*.out
