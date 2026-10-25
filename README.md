@@ -85,10 +85,12 @@ python fit/predict.py        # every model and setting; a few hours on 8 cores
 python fit/evaluate.py
 python analysis/figures.py
 python scenes/screen.py 500000          # generate, filter, screen, confirm; about 10 hours on 8 cores
-python scenes/select.py 40 12 0.3       # choose scenes, cue check, model recovery
+python scenes/select.py 40 12 0.3       # choose scenes, cue check, model recovery (uses the included scenes/work/candidates.json)
 python scenes/finalize.py results/selection_40_12_0.3.json
 ```
 
 ## Credit
 
 Scenes and ratings, including the four anchor scenes copied into `scenes/final/test_scenes.json`: Lu, Bechlivanidis & Gerstenberg (2026), "Causal judgments in complex situations", CogSci 2026; materials at github.com/cicl-stanford/complex_causation_cogsci2026. The capacity limit motivating the budget: Balaban & Ullman (2025), "The capacity limits of moving objects in the imagination", Nature Communications.
+
+Our code is under the MIT licence (`LICENSE`). The original study's scenes and ratings belong to its authors and are not covered by it.
