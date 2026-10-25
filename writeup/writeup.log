@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.25)  25 OCT 2026 01:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.9.25)  25 OCT 2026 06:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -292,7 +292,7 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count286
 \l__pdf_internal_box=\box53
 )
-No file writeup.aux.
+(./writeup.aux)
 \openout1 = `writeup.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -313,6 +313,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -392,6 +393,8 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 18.
+
+(./writeup.out) (./writeup.out)
 \@outlinefile=\write3
 \openout3 = `writeup.out'.
 
@@ -420,11 +423,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 20.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 20.
-
-
-LaTeX Warning: Reference `fig:nine' on page 1 undefined on input line 22.
-
-<figures/nine_ball.pdf, id=5, 505.89pt x 155.38051pt>
+<figures/nine_ball.pdf, id=6, 505.89pt x 155.38051pt>
 File: figures/nine_ball.pdf Graphic file (type pdf)
 <use figures/nine_ball.pdf>
 Package pdftex.def Info: figures/nine_ball.pdf  used on input line 26.
@@ -432,17 +431,12 @@ Package pdftex.def Info: figures/nine_ball.pdf  used on input line 26.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 32.
 
-LaTeX Warning: Reference `tab:loo' on page 1 undefined on input line 37.
-
-
-LaTeX Warning: Reference `fig:err' on page 1 undefined on input line 37.
-
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
 (caption)                particular \caption on input line 42.
 See the caption package documentation for explanation.
 
-<figures/error_by_balls.pdf, id=6, 238.49101pt x 151.767pt>
+<figures/error_by_balls.pdf, id=9, 238.49101pt x 151.767pt>
 File: figures/error_by_balls.pdf Graphic file (type pdf)
 <use figures/error_by_balls.pdf>
 Package pdftex.def Info: figures/error_by_balls.pdf  used on input line 59.
@@ -461,28 +455,15 @@ st/fonts/enc/dvips/base/8r.enc} <./figures/nine_ball.pdf>]
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `writeup.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `writeup.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+Package rerunfilecheck Info: File `writeup.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 12732 strings out of 476182
- 205913 string characters out of 5795595
+ 12760 strings out of 476182
+ 206244 string characters out of 5795595
  1938975 words of memory out of 5000000
- 34463 multiletter control sequences out of 15000+600000
- 581152 words of font info for 148 fonts, out of 8000000 for 9000
+ 34467 multiletter control sequences out of 15000+600000
+ 583642 words of font info for 160 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,9n,79p,1004b,493s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
@@ -493,10 +474,10 @@ dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on writeup.pdf (2 pages, 137569 bytes).
+Output written on writeup.pdf (2 pages, 139549 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 175 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  11 named destinations out of 1000 (max. 500000)
- 40971 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 45067 words of extra memory for PDF output out of 51595 (max. 10000000)
 

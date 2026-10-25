@@ -1,0 +1,111 @@
+{
+ "scale": 1.0,
+ "need": {
+  "clear": 8,
+  "hit": 8,
+  "crowd": 8,
+  "k12": 4,
+  "k23": 4
+ },
+ "big": 40.0,
+ "small": 12.0,
+ "cue_line": 0.3,
+ "qualifying": {
+  "clear": 69,
+  "hit": 78,
+  "crowd": 68,
+  "k12": 19,
+  "k23": 17
+ },
+ "chosen": {
+  "clear": [
+   20649,
+   3331,
+   2775,
+   43617,
+   5292,
+   3095,
+   53914,
+   19423
+  ],
+  "hit": [
+   1922,
+   1341,
+   303,
+   2702,
+   3994,
+   1117,
+   7714,
+   5090
+  ],
+  "crowd": [
+   191430,
+   23451,
+   275300,
+   361131,
+   80427,
+   134477,
+   139339,
+   145944
+  ],
+  "k12": [
+   177709,
+   204162,
+   2309,
+   2808
+  ],
+  "k23": [
+   388175,
+   87287,
+   33199,
+   46109
+  ]
+ },
+ "worst_cue": [
+  -0.2986160608055249,
+  "closest_A_B",
+  "own_gap"
+ ],
+ "swaps": 14,
+ "across_set_cue_r": {
+  "closest_A_B~vs_full": -0.66,
+  "closest_A_B~vs_how": -0.39,
+  "closest_A_B~vs_crowd": -0.69,
+  "collisions~vs_full": 0.11,
+  "collisions~vs_how": -0.1,
+  "collisions~vs_crowd": -0.1,
+  "balls~vs_full": -0.16,
+  "balls~vs_how": -0.07,
+  "balls~vs_crowd": -0.26,
+  "A_near_B_path~vs_full": 0.51,
+  "A_near_B_path~vs_how": 0.4,
+  "A_near_B_path~vs_crowd": 0.59
+ },
+ "recovery": {
+  "full": {
+   "model_share": 1.0,
+   "k_share": null
+  },
+  "how": {
+   "model_share": 1.0,
+   "k_share": null
+  },
+  "crowding": {
+   "model_share": 1.0,
+   "k_share": null
+  },
+  "budget_k1": {
+   "model_share": 1.0,
+   "k_share": 1.0
+  },
+  "budget_k2": {
+   "model_share": 1.0,
+   "k_share": 1.0
+  },
+  "budget_k3": {
+   "model_share": 1.0,
+   "k_share": 1.0
+  }
+ },
+ "recovery_passed": true
+}

@@ -31,6 +31,26 @@ With k = 1, B's imagined path can differ from its real path only if A touched B 
 
 ![The 9-ball video](writeup/figures/nine_ball.png)
 
+## Test scenes for a new study
+
+`scenes/final/` holds 36 videos a lab could run with the original whether question: 32 new scenes and 4 original videos as anchors. `PLAN.md` there is a pre-registration-style plan (hypotheses, analysis, pass and fail lines, known weak spots).
+
+The new scenes were chosen by fixed rules from 500,000 random scenes in the style of the originals, of which 37,167 passed the original videos' constraints. A scene qualifies when two models differ by at least 40 rating points at every setting the existing data cannot rule out.
+
+| Kind of scene | Scenes | Budget | Full CSM | Crowding | How only |
+| --- | --- | --- | --- | --- | --- |
+| Clear the way: A removes a ball that would have blocked B | 8 | 25 | 73 | 60 | 50 |
+| Budget vs. crowding noise | 8 | 25 | 73 | 74 | 61 |
+| Hit but no difference: A hits B, B would have gone in anyway | 8 | 25 | 16 | 21 | 66 |
+| Budget of 1 vs. 2, and 2 vs. 3 (half in each direction) | 8 | 25 or 83 | 45 | 52 | 66 |
+| Original videos | 4 | 54 | 62 | 41 | 45 |
+
+Values are each model's mean predicted rating at its best fit to the existing data (`scenes/final/summary.csv`; every setting is in `predictions.csv`).
+
+- **Power:** in 200 simulated studies of 50 people, the generating model and its budget size were recovered every time, for every model and for budgets of 1, 2 and 3.
+- **Simple cues:** within each kind, no crude cue (A's closest approach to B, number of collisions or balls, A passing near B's path) tracks the size of the model disagreement above |r| = .3. Across kinds, A's closest approach to B does (r = −.66), so a "did A get near B" rule should be added as one more rival when the data come in.
+- **Robustness:** the same scenes are chosen with a 30 or 50 point bar instead of 40, and recovery is unchanged. A stricter cue line of .2 cannot be met (best .27).
+
 ## Our simulator
 
 The original repository has no licence file, so we did not copy or import its code. `FACTSHEET.md` lists the physical settings and model rules we took from the paper and code (table and gate size, ball size, speed scale, time step, elasticity, where and how noise is applied), with the source of each. `sim/` was written from that list.
@@ -64,6 +84,9 @@ python fit/reproduce.py      # about 3 minutes on 8 cores
 python fit/predict.py        # every model and setting; a few hours on 8 cores
 python fit/evaluate.py
 python analysis/figures.py
+python scenes/screen.py 500000          # generate, filter, screen, confirm; about 10 hours on 8 cores
+python scenes/select.py 40 12 0.3       # choose scenes, cue check, model recovery
+python scenes/finalize.py results/selection_40_12_0.3.json
 ```
 
 ## Credit

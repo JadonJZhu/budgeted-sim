@@ -27,7 +27,7 @@ ORDER = ["clear", "hit", "crowd", "k12", "k23"]
 
 def main(selection):
     sel = json.load(open(selection))
-    data = json.load(open(os.path.join(HERE, "scenes", "work", "candidates.json")))
+    data = json.load(open(os.environ.get("CANDIDATES", os.path.join(HERE, "scenes", "work", "candidates.json"))))
     cfg = data["settings"]
     by_id = {c["id"]: c for c in data["confirmed"]}
     ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
@@ -74,21 +74,21 @@ def main(selection):
             st = best[key]["best_setting"]
             a, b = best[key]["scale"]
             if model == "full":
-                v = s[(s.model == "full") & np.isclose(s.theta.astype(float), st["theta"])].p
+                v = s[(s.model == "full") & np.isclose(pd.to_numeric(s.theta, errors="coerce"), st["theta"])].p
             elif model == "how":
                 v = s[s.model == "how"].p
             elif model == "budget":
                 v = s[(s.model == "budget") & (s.k.astype(str) == str(st["k"]))
-                      & np.isclose(s.theta.astype(float), st["theta"])].p
+                      & np.isclose(pd.to_numeric(s.theta, errors="coerce"), st["theta"])].p
             else:
                 eff = st["theta0"] + st["theta1"] * (len(t["balls"]) - 2)
                 c = s[s.model == "crowding_effective_theta"]
-                v = [np.interp(eff, c.theta.astype(float), c.p)]
+                v = [np.interp(eff, pd.to_numeric(c.theta, errors="coerce"), c.p)]
             out[f"{model}_rating"] = round(float(a + b * float(list(v)[0])), 1)
             if model == "budget":
                 for k in (1, 2, 3):
                     vk = s[(s.model == "budget") & (s.k.astype(str) == str(k))
-                           & np.isclose(s.theta.astype(float), st["theta"])].p
+                           & np.isclose(pd.to_numeric(s.theta, errors="coerce"), st["theta"])].p
                     out[f"budget_k{k}_rating"] = round(float(a + b * float(list(vk)[0])), 1)
         summ.append(out)
     pd.DataFrame(summ).to_csv(os.path.join(FINAL, "summary.csv"), index=False)

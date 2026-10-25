@@ -1,2 +1,22 @@
 \section*{A test that separates the models}
-PLACEHOLDER
+We generated 500,000 random scenes in the style of the originals (3 to 9 balls), kept the 37,167 that pass the original videos' constraints (B goes in, 7 to 13 seconds, every collision on screen, no two collisions close in time and place), and selected test scenes by fixed rules, so none was picked by hand. A scene qualifies when two models differ by at least 40 rating points at \emph{every} setting the existing data cannot rule out (budgets of 1 to 3 balls, and every noise level whose fit is inside the 95\% bootstrap interval of the best). 40 points is over three times the widest 95\% measurement range of a video's mean rating in the original data ($\pm 12$).
+
+\begin{center}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+Kind of scene & $n$ & Budget & Full CSM & Crowding & How only \\
+\midrule
+Clear the way: A removes a ball that would have blocked B & 8 & 25 & 73 & 60 & 50 \\
+Budget vs.\ crowding noise & 8 & 25 & 73 & 74 & 61 \\
+Hit but no difference: A hits B, B would have gone in anyway & 8 & 25 & 16 & 21 & 66 \\
+Budget of 1 vs.\ 2, and 2 vs.\ 3 (half each direction) & 8 & 25 or 83 & 45 & 52 & 66 \\
+Original videos as anchors & 4 & 54 & 62 & 41 & 45 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\footnotesize Mean predicted rating (flipped whether, 0 to 100) of each model at its best fit to the existing data.
+\end{center}
+
+In simulated studies of 50 participants (per-person spread taken from the original ratings), the generating model won all 200 studies and its budget size was recovered in all 200, for every model and for $k = 1$, 2 and 3. Within each kind of scene, no crude cue (A's closest approach to B, number of collisions or balls, A passing near B's path) correlates with the size of the model disagreement above $|r| = .3$. Across kinds, A's closest approach to B does track the budget-vs.-CSM gap ($r = -.66$), so we suggest adding a proximity rule as one more rival in the analysis. The 36 scenes (about 27 minutes), rendered videos, every model's prediction at every setting and a pre-registration-style plan with these pass and fail lines are in the repository. We would be glad to share anything else, or to switch to the lab's simulator if its repository gains a licence.

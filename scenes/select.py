@@ -4,6 +4,8 @@ cues, and run model recovery.
 Usage: python scenes/select.py [big small cue]   (defaults 40 12 .3)
 
 Selection is by fixed rules, so no scene is picked by hand:
+- Scenes where A or B passes within 6 pixels of another ball without touching
+  it are excluded, since a viewer could not tell whether they touched.
 - A scene qualifies for a kind if it passes that kind's rule at 1,000 replays
   over every plausible setting (see scenes/screen.py).
 - Which-model kinds need 8 scenes each, which-setting kinds 4 each. Within a
@@ -26,16 +28,38 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from fit.data import HERE, balls, ratings, scenes  # noqa: E402
 from fit.evaluate import full_fit, grids, scale_fit  # noqa: E402
 from scenes.recovery import recover, residual_pool  # noqa: E402
-from scenes.screen import KINDS, NEED, crowd_thetas, gaps, kind_of, margin  # noqa: E402
+from scenes.screen import KINDS, NEED, crowd_thetas, direction, gaps, kind_of, margin, slots  # noqa: E402
 from sim.models import Real  # noqa: E402
+from sim.physics import simulate  # noqa: E402
 
 WORK = os.path.join(HERE, "scenes", "work")
 ANCHORS = ["2ball_h_only_1", "3ball_w_only_1", "9ball_w_only_1", "12ball_both_1"]
 BINS = [(3, 4), (5, 7), (8, 9)]
 
 
+NEAR_MISS = 6  # pixels between edges
+
+
+def unclear_contact(scene):
+    """True if A or B passes within NEAR_MISS pixels of another ball without
+    touching it, so a viewer could not tell whether they touched."""
+    run = simulate(scene, record=True, full_length=True)
+    end = run.exit_step + 30
+    touched = {frozenset((a, b)) for _, a, b, _, _ in run.contacts}
+    for a in ("A", "B"):
+        for b, pb in run.paths.items():
+            if b == a or frozenset((a, b)) in touched:
+                continue
+            pa, pb = run.paths[a][:end], pb[:end]
+            on = (pa[:, 0] > 0) & (pa[:, 0] < 1000) & (pb[:, 0] > 0) & (pb[:, 0] < 1000)
+            if on.any() and np.hypot(*(pa[on] - pb[on]).T).min() < 60 + NEAR_MISS:
+                return True
+    return False
+
+
 def qualifying(cands, big, small):
     out = {k: [] for k in KINDS}
+    cands = [c for c in cands if not unclear_contact(c["scene"])]
     for c in cands:
         g = gaps({k: np.array(v) for k, v in c["p1000"].items()})
         for k in kind_of(g, big, small):
@@ -47,17 +71,21 @@ def qualifying(cands, big, small):
 
 def pick(qual, used=()):
     chosen, used = {}, set(used)
-    for kind, need in NEED.items():
-        bins = [[c for m, c in qual[kind] if lo <= len(c["scene"]) <= hi] for lo, hi in BINS]
+    for kind in NEED:
         got = []
-        while len(got) < need and any(bins):
-            for b in bins:
-                while b and b[0]["id"] in used:
-                    b.pop(0)
-                if b and len(got) < need:
-                    c = b.pop(0)
-                    got.append(c)
-                    used.add(c["id"])
+        for d, need in slots(kind):
+            pool = [c for m, c in qual[kind] if direction(c["p1000"], kind) == d]
+            bins = [[c for c in pool if lo <= len(c["scene"]) <= hi] for lo, hi in BINS]
+            part = []
+            while len(part) < need and any(bins):
+                for b in bins:
+                    while b and b[0]["id"] in used:
+                        b.pop(0)
+                    if b and len(part) < need:
+                        c = b.pop(0)
+                        part.append(c)
+                        used.add(c["id"])
+            got += part
         chosen[kind] = got
     return chosen
 
@@ -76,30 +104,58 @@ def model_gaps(c):
     p = c["p1000"]
     bud = np.mean(p["k1"] + p["k2"] + p["k3"])
     return {"vs_full": bud - np.mean(p["full"]), "vs_how": bud - p["how"][0],
-            "vs_crowd": bud - np.mean(p["crowd"])}
+            "vs_crowd": bud - np.mean(p["crowd"]),
+            "k1_k2": np.mean(p["k1"]) - np.mean(p["k2"]),
+            "k2_k3": np.mean(p["k2"]) - np.mean(p["k3"])}
+
+
+# each kind's own comparison
+OWN = {"clear": "vs_full", "hit": "vs_how", "crowd": "vs_crowd", "k12": "k1_k2", "k23": "k2_k3"}
+CUES = ("closest_A_B", "collisions", "balls", "A_near_B_path")
 
 
 def cue_table(chosen):
     rows = []
     for kind, cs in chosen.items():
         for c in cs:
-            rows.append({"id": c["id"], "kind": kind, **cues(c), **model_gaps(c)})
+            g = model_gaps(c)
+            rows.append({"id": c["id"], "kind": kind, **cues(c), **g, "own_gap": g[OWN[kind]]})
     return pd.DataFrame(rows)
 
 
+def within_z(df, col):
+    g = df.groupby("kind")[col]
+    sd = g.transform("std").replace(0, np.nan)
+    return ((df[col] - g.transform("mean")) / sd).fillna(0)
+
+
 def worst_cue(df):
-    worst = (0, None, None)
-    for cue in ("closest_A_B", "collisions", "balls", "A_near_B_path"):
-        for gap in ("vs_full", "vs_how", "vs_crowd"):
-            if df[cue].std() == 0:
-                continue
-            r = np.corrcoef(df[cue], df[gap])[0, 1]
-            if abs(r) > abs(worst[0]):
-                worst = (r, cue, gap)
+    """Pass line: the pooled within-kind correlation between each cue and the
+    size of that kind's own model disagreement. Differences between kinds are
+    built in by design (in 'hit' scenes A touches B, which is exactly what the
+    how-only model uses), so they are reported separately, not gated."""
+    worst = (0, None, "own_gap")
+    gz = within_z(df, "own_gap")
+    for cue in CUES:
+        cz = within_z(df, cue)
+        if cz.std() == 0 or gz.std() == 0:
+            continue
+        r = float(np.corrcoef(cz, gz)[0, 1])
+        if abs(r) > abs(worst[0]):
+            worst = (r, cue, "own_gap")
     return worst
 
 
-def cue_check(qual, line, max_swaps=60):
+def across_set(df):
+    out = {}
+    for cue in CUES:
+        for gap in ("vs_full", "vs_how", "vs_crowd"):
+            if df[cue].std() > 0:
+                out[f"{cue}~{gap}"] = round(float(np.corrcoef(df[cue], df[gap])[0, 1]), 2)
+    return out
+
+
+def cue_check(qual, line, max_swaps=200):
     chosen = pick(qual)
     swaps, dropped = 0, set()
     while True:
@@ -107,18 +163,25 @@ def cue_check(qual, line, max_swaps=60):
         r, cue, gap = worst_cue(df)
         if abs(r) < line or swaps >= max_swaps:
             return chosen, df, (r, cue, gap), swaps
-        # the scene contributing most to this correlation
-        z = (df[cue] - df[cue].mean()) * (df[gap] - df[gap].mean()) * np.sign(r)
-        bad = df.loc[z.idxmax()]
-        dropped.add(int(bad.id))
+        # swap the scene contributing most to this correlation that still has
+        # an unused replacement of the same kind and direction
+        z = (within_z(df, cue) * within_z(df, gap) * np.sign(r)).sort_values(ascending=False)
         used = {c["id"] for cs in chosen.values() for c in cs} | dropped
-        kind = bad.kind
-        rest = [c for c in chosen[kind] if c["id"] != bad.id]
-        repl = [c for m, c in qual[kind] if c["id"] not in used]
-        if not repl:
+        for i in z.index:
+            if z[i] <= 0:
+                return chosen, df, (r, cue, gap), swaps
+            bad = df.loc[i]
+            kind = bad.kind
+            d = direction(next(c for c in chosen[kind] if c["id"] == bad.id)["p1000"], kind)
+            repl = [c for m, c in qual[kind] if c["id"] not in used
+                    and direction(c["p1000"], kind) == d]
+            if repl:
+                dropped.add(int(bad.id))
+                chosen[kind] = [c for c in chosen[kind] if c["id"] != bad.id] + [repl[0]]
+                swaps += 1
+                break
+        else:
             return chosen, df, (r, cue, gap), swaps
-        chosen[kind] = rest + [repl[0]]
-        swaps += 1
 
 
 # ---------- model recovery on the chosen scenes plus the anchors
@@ -179,8 +242,11 @@ def generators(models, G_orig, y, rule):
     return out
 
 
-def main(big=40, small=12, line=0.3, write=True):
-    data = json.load(open(os.path.join(WORK, "candidates.json")))
+def main(big=40, small=12, line=0.3, write=True, scale=1.0):
+    base = {"clear": 8, "hit": 8, "crowd": 8, "k12": 4, "k23": 4}
+    for k, v in base.items():
+        NEED[k] = max(2 if k in ("k12", "k23") else 1, int(round(v * scale)))
+    data = json.load(open(os.environ.get("CANDIDATES", os.path.join(WORK, "candidates.json"))))
     cfg = data["settings"]
     qual = qualifying(data["confirmed"], big, small)
     counts = {k: len(v) for k, v in qual.items()}
@@ -199,17 +265,19 @@ def main(big=40, small=12, line=0.3, write=True):
     print("recovery", rec, flush=True)
     passed = all(v["model_share"] >= 0.9 and (v["k_share"] is None or v["k_share"] >= 0.8)
                  for v in rec.values())
-    result = {"big": big, "small": small, "cue_line": line, "qualifying": counts,
+    result = {"scale": scale, "need": dict(NEED), "big": big, "small": small, "cue_line": line, "qualifying": counts,
               "chosen": {k: [c["id"] for c in v] for k, v in chosen.items()},
               "worst_cue": [float(worst[0]), worst[1], worst[2]], "swaps": swaps,
+              "across_set_cue_r": across_set(df),
               "recovery": rec, "recovery_passed": passed}
     if write:
-        out = os.path.join(HERE, "results", f"selection_{big}_{small}_{line}.json")
+        tag = f"{big:g}_{small:g}_{line:g}" + ("" if scale == 1 else f"_x{scale:g}")
+        out = os.path.join(HERE, "results", f"selection_{tag}.json")
         json.dump(result, open(out, "w"), indent=1)
-        df.to_csv(os.path.join(HERE, "results", f"cues_{big}_{small}_{line}.csv"), index=False)
+        df.to_csv(os.path.join(HERE, "results", f"cues_{tag}.csv"), index=False)
     return result, chosen
 
 
 if __name__ == "__main__":
     args = [float(a) for a in sys.argv[1:]]
-    main(*args)
+    main(*args[:3], scale=args[3] if len(args) > 3 else 1.0)

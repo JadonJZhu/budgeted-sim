@@ -158,6 +158,25 @@ NEED = {"clear": 8, "hit": 8, "crowd": 8, "k12": 4, "k23": 4}
 FINALISTS = 5  # confirm this many times the scenes each kind needs
 
 
+def direction(p, kind):
+    """Which-setting scenes come in both directions, so that every budget size
+    predicts 'A mattered' in some scenes and 'A did not matter' in others.
+    Without this, a budget of 1 predicts the same answer for every scene and
+    cannot be recovered."""
+    if kind == "k12":
+        return "up" if np.mean(p["k1"]) > np.mean(p["k2"]) else "down"
+    if kind == "k23":
+        return "up" if np.mean(p["k2"]) > np.mean(p["k3"]) else "down"
+    return None
+
+
+def slots(kind):
+    """(direction, scenes needed) for a kind."""
+    if kind in ("k12", "k23"):
+        return [("up", NEED[kind] // 2), ("down", NEED[kind] - NEED[kind] // 2)]
+    return [(None, NEED[kind])]
+
+
 def margin(g, kind):
     """How far a scene clears its kind's rule, in points."""
     return {"clear": g["clear"], "hit": g["hit"], "crowd": g["crowd"],
@@ -206,10 +225,12 @@ def main(n_scenes=20000):
         # finalists: each kind's strongest screen passes, FINALISTS x what it needs
         fin = {}
         for kind in KINDS:
-            passing = [c for c in screened if kind in c["kinds100"]]
-            passing.sort(key=lambda c: -margin(c["g100"], kind))
-            for c in passing[: FINALISTS * NEED[kind]]:
-                fin[c["id"]] = c
+            for d, need in slots(kind):
+                passing = [c for c in screened if kind in c["kinds100"]
+                           and direction(c["p100"], kind) == d]
+                passing.sort(key=lambda c: -margin(c["g100"], kind))
+                for c in passing[: FINALISTS * need]:
+                    fin[c["id"]] = c
         fin = sorted(fin.values(), key=lambda c: c["id"])
         print("finalists", len(fin), flush=True)
         confirmed = run_stage(pool, fin, 1000, os.path.join(OUT, "confirmed.jsonl"))

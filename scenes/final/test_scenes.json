@@ -1,0 +1,2626 @@
+[
+ {
+  "trial": "clear_01",
+  "kind": "clear",
+  "source_id": 20649,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1035.83,
+     598.2
+    ],
+    "velocity": [
+     -0.95,
+     -0.52
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     134.26,
+     373.1
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     497.04,
+     341.96
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     291.2,
+     357.41
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_02",
+  "kind": "clear",
+  "source_id": 3331,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1064.7,
+     443.02
+    ],
+    "velocity": [
+     -1.24,
+     0.08
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     202.21,
+     491.89
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     641.55,
+     564.13
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     803.85,
+     492.62
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     882.93,
+     208.41
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1063.03,
+     183.78
+    ],
+    "velocity": [
+     -0.84,
+     0.22
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     329.48,
+     315.28
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_03",
+  "kind": "clear",
+  "source_id": 2775,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1059.04,
+     246.18
+    ],
+    "velocity": [
+     -1.13,
+     -0.13
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1137.24,
+     261.24
+    ],
+    "velocity": [
+     -0.93,
+     -0.58
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1142.18,
+     83.21
+    ],
+    "velocity": [
+     -1.09,
+     -0.42
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     450.72,
+     373.17
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     171.65,
+     503.35
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     676.39,
+     220.53
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     404.77,
+     520.97
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     290.26,
+     562.06
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     511.48,
+     206.4
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_04",
+  "kind": "clear",
+  "source_id": 43617,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1130.49,
+     266.51
+    ],
+    "velocity": [
+     -1.38,
+     0.05
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1118.45,
+     458.76
+    ],
+    "velocity": [
+     -1.0,
+     -0.03
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1066.93,
+     87.71
+    ],
+    "velocity": [
+     -1.04,
+     0.3
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     369.6,
+     242.31
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_05",
+  "kind": "clear",
+  "source_id": 5292,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1138.15,
+     552.07
+    ],
+    "velocity": [
+     -1.24,
+     -0.13
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     250.05,
+     561.66
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     887.43,
+     484.42
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1077.34,
+     166.88
+    ],
+    "velocity": [
+     -1.03,
+     -0.43
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     670.87,
+     591.79
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1110.44,
+     666.79
+    ],
+    "velocity": [
+     -0.88,
+     0.25
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_06",
+  "kind": "clear",
+  "source_id": 3095,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1130.06,
+     470.69
+    ],
+    "velocity": [
+     -0.93,
+     -0.14
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     855.72,
+     399.85
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1128.03,
+     355.33
+    ],
+    "velocity": [
+     -0.88,
+     -0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     840.61,
+     154.5
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     414.79,
+     495.17
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1054.65,
+     402.31
+    ],
+    "velocity": [
+     -1.07,
+     0.14
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1058.01,
+     611.99
+    ],
+    "velocity": [
+     -0.97,
+     -0.42
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     491.19,
+     201.72
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     499.35,
+     599.16
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_07",
+  "kind": "clear",
+  "source_id": 53914,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1061.12,
+     161.72
+    ],
+    "velocity": [
+     -0.98,
+     0.37
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1040.08,
+     659.14
+    ],
+    "velocity": [
+     -0.94,
+     0.36
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1149.21,
+     141.06
+    ],
+    "velocity": [
+     -1.13,
+     0.14
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     626.99,
+     299.84
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "clear_08",
+  "kind": "clear",
+  "source_id": 19423,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1048.87,
+     375.84
+    ],
+    "velocity": [
+     -1.32,
+     -0.12
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     437.51,
+     239.05
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1090.02,
+     215.38
+    ],
+    "velocity": [
+     -1.31,
+     0.18
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     852.87,
+     599.51
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     871.11,
+     375.98
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     791.07,
+     339.58
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1068.16,
+     609.21
+    ],
+    "velocity": [
+     -1.15,
+     -0.31
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_01",
+  "kind": "hit",
+  "source_id": 1922,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1141.73,
+     125.45
+    ],
+    "velocity": [
+     -1.24,
+     -0.6
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1147.8,
+     294.1
+    ],
+    "velocity": [
+     -0.82,
+     0.1
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     484.69,
+     246.37
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_02",
+  "kind": "hit",
+  "source_id": 1341,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1035.1,
+     594.16
+    ],
+    "velocity": [
+     -1.34,
+     -0.09
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     171.58,
+     226.36
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1112.91,
+     160.34
+    ],
+    "velocity": [
+     -1.43,
+     -0.37
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     212.54,
+     584.03
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1075.39,
+     534.28
+    ],
+    "velocity": [
+     -1.01,
+     0.22
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1130.44,
+     233.96
+    ],
+    "velocity": [
+     -0.95,
+     0.36
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_03",
+  "kind": "hit",
+  "source_id": 303,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1137.66,
+     148.03
+    ],
+    "velocity": [
+     -1.16,
+     0.29
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1124.12,
+     68.98
+    ],
+    "velocity": [
+     -0.96,
+     0.21
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     838.63,
+     551.25
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     830.5,
+     433.95
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1123.78,
+     556.91
+    ],
+    "velocity": [
+     -1.01,
+     0.37
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     706.1,
+     544.81
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     567.99,
+     511.75
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     825.71,
+     257.77
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     1099.06,
+     398.4
+    ],
+    "velocity": [
+     -1.4,
+     0.04
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_04",
+  "kind": "hit",
+  "source_id": 2702,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1075.82,
+     473.03
+    ],
+    "velocity": [
+     -1.3,
+     0.33
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1038.11,
+     158.81
+    ],
+    "velocity": [
+     -1.12,
+     -0.44
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     708.15,
+     506.81
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_05",
+  "kind": "hit",
+  "source_id": 3994,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1145.07,
+     501.76
+    ],
+    "velocity": [
+     -1.19,
+     0.04
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1146.5,
+     156.65
+    ],
+    "velocity": [
+     -1.2,
+     -0.5
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     153.52,
+     588.62
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     131.79,
+     269.91
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1138.81,
+     388.55
+    ],
+    "velocity": [
+     -1.2,
+     0.09
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1106.88,
+     287.08
+    ],
+    "velocity": [
+     -1.39,
+     0.09
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_06",
+  "kind": "hit",
+  "source_id": 1117,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1034.04,
+     497.58
+    ],
+    "velocity": [
+     -1.09,
+     0.2
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     397.32,
+     271.55
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     165.23,
+     489.51
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1066.75,
+     213.14
+    ],
+    "velocity": [
+     -1.22,
+     0.04
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1148.37,
+     644.05
+    ],
+    "velocity": [
+     -1.04,
+     0.13
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     477.22,
+     374.79
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     859.42,
+     296.81
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     535.92,
+     574.33
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_07",
+  "kind": "hit",
+  "source_id": 7714,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1090.22,
+     580.22
+    ],
+    "velocity": [
+     -1.11,
+     0.36
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1043.62,
+     230.04
+    ],
+    "velocity": [
+     -1.02,
+     -0.46
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1093.46,
+     145.64
+    ],
+    "velocity": [
+     -0.94,
+     -0.38
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "hit_08",
+  "kind": "hit",
+  "source_id": 5090,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1086.4,
+     443.05
+    ],
+    "velocity": [
+     -1.2,
+     0.06
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1105.8,
+     245.75
+    ],
+    "velocity": [
+     -1.46,
+     -0.14
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     473.63,
+     451.28
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     703.27,
+     154.3
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     281.53,
+     585.85
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_01",
+  "kind": "crowd",
+  "source_id": 191430,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1037.42,
+     538.08
+    ],
+    "velocity": [
+     -1.12,
+     -0.6
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1114.04,
+     113.99
+    ],
+    "velocity": [
+     -1.16,
+     0.3
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     139.66,
+     368.62
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     703.08,
+     383.14
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_02",
+  "kind": "crowd",
+  "source_id": 23451,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1093.88,
+     433.75
+    ],
+    "velocity": [
+     -1.07,
+     0.32
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     342.11,
+     459.46
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     683.06,
+     522.76
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     540.61,
+     490.64
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     435.86,
+     363.52
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1041.51,
+     594.07
+    ],
+    "velocity": [
+     -1.21,
+     -0.51
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     704.16,
+     270.51
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_03",
+  "kind": "crowd",
+  "source_id": 275300,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1065.88,
+     402.66
+    ],
+    "velocity": [
+     -1.31,
+     0.4
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     230.31,
+     406.91
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     377.75,
+     523.6
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     473.36,
+     295.62
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     227.81,
+     552.97
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1128.25,
+     350.0
+    ],
+    "velocity": [
+     -1.24,
+     -0.07
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1100.74,
+     62.53
+    ],
+    "velocity": [
+     -1.21,
+     -0.1
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     496.35,
+     545.72
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     609.74,
+     527.83
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_04",
+  "kind": "crowd",
+  "source_id": 361131,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1109.98,
+     299.07
+    ],
+    "velocity": [
+     -0.95,
+     -0.25
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     590.64,
+     329.24
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     846.92,
+     252.56
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     692.35,
+     292.71
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_05",
+  "kind": "crowd",
+  "source_id": 80427,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1058.07,
+     471.71
+    ],
+    "velocity": [
+     -0.98,
+     -0.46
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     168.23,
+     344.65
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     160.5,
+     436.55
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     665.38,
+     314.34
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     247.63,
+     160.14
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1066.07,
+     173.95
+    ],
+    "velocity": [
+     -0.81,
+     -0.31
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     338.64,
+     308.27
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_06",
+  "kind": "crowd",
+  "source_id": 134477,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1054.75,
+     451.24
+    ],
+    "velocity": [
+     -1.0,
+     -0.13
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     157.89,
+     365.21
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     533.97,
+     470.56
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     712.54,
+     414.63
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     423.88,
+     379.44
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     644.23,
+     303.11
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_07",
+  "kind": "crowd",
+  "source_id": 139339,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1087.96,
+     652.52
+    ],
+    "velocity": [
+     -1.05,
+     -0.06
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     248.98,
+     346.96
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     601.42,
+     588.43
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     460.8,
+     471.23
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     761.7,
+     471.93
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     599.46,
+     212.3
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "crowd_08",
+  "kind": "crowd",
+  "source_id": 145944,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1067.76,
+     333.41
+    ],
+    "velocity": [
+     -1.08,
+     -0.08
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     126.07,
+     444.56
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     379.76,
+     348.26
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     598.54,
+     434.35
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     469.93,
+     311.18
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k12_01",
+  "kind": "k12",
+  "source_id": 177709,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1039.79,
+     249.53
+    ],
+    "velocity": [
+     -1.3,
+     -0.22
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1056.74,
+     363.5
+    ],
+    "velocity": [
+     -1.09,
+     -0.4
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     381.01,
+     172.58
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k12_02",
+  "kind": "k12",
+  "source_id": 204162,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1061.55,
+     614.23
+    ],
+    "velocity": [
+     -1.39,
+     -0.07
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1056.97,
+     420.59
+    ],
+    "velocity": [
+     -1.26,
+     -0.13
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1144.31,
+     304.02
+    ],
+    "velocity": [
+     -1.09,
+     -0.13
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     416.23,
+     544.75
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1133.18,
+     78.48
+    ],
+    "velocity": [
+     -1.01,
+     -0.35
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     693.5,
+     520.78
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1074.08,
+     124.96
+    ],
+    "velocity": [
+     -1.12,
+     -0.19
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k12_03",
+  "kind": "k12",
+  "source_id": 2309,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1034.48,
+     456.17
+    ],
+    "velocity": [
+     -1.08,
+     -0.06
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     509.08,
+     365.13
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1058.1,
+     354.76
+    ],
+    "velocity": [
+     -0.96,
+     -0.21
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1145.75,
+     305.75
+    ],
+    "velocity": [
+     -1.23,
+     -0.08
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1108.59,
+     469.78
+    ],
+    "velocity": [
+     -0.86,
+     -0.49
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     166.23,
+     250.77
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     612.03,
+     158.96
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     597.64,
+     400.65
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     1138.36,
+     645.8
+    ],
+    "velocity": [
+     -0.89,
+     0.27
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k12_04",
+  "kind": "k12",
+  "source_id": 2808,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1035.23,
+     329.19
+    ],
+    "velocity": [
+     -1.23,
+     -0.13
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     723.84,
+     413.16
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     881.63,
+     338.46
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     195.5,
+     207.54
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1123.39,
+     480.08
+    ],
+    "velocity": [
+     -1.26,
+     -0.05
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1138.92,
+     249.85
+    ],
+    "velocity": [
+     -0.8,
+     -0.3
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k23_01",
+  "kind": "k23",
+  "source_id": 388175,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1069.42,
+     115.67
+    ],
+    "velocity": [
+     -0.94,
+     -0.14
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1103.67,
+     645.78
+    ],
+    "velocity": [
+     -1.09,
+     -0.41
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     345.89,
+     150.16
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     280.81,
+     291.2
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k23_02",
+  "kind": "k23",
+  "source_id": 87287,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1147.94,
+     539.19
+    ],
+    "velocity": [
+     -1.27,
+     -0.54
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     599.38,
+     281.46
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     621.95,
+     560.03
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     452.38,
+     306.8
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1143.6,
+     653.78
+    ],
+    "velocity": [
+     -1.45,
+     -0.3
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1072.17,
+     62.49
+    ],
+    "velocity": [
+     -1.36,
+     0.51
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     702.75,
+     599.29
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k23_03",
+  "kind": "k23",
+  "source_id": 33199,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1120.45,
+     389.2
+    ],
+    "velocity": [
+     -0.97,
+     0.05
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     588.12,
+     336.19
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1130.43,
+     269.94
+    ],
+    "velocity": [
+     -0.91,
+     0.14
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1104.22,
+     617.64
+    ],
+    "velocity": [
+     -0.95,
+     0.52
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     141.1,
+     310.07
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     855.9,
+     582.11
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     623.01,
+     432.76
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "k23_04",
+  "kind": "k23",
+  "source_id": 46109,
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1068.91,
+     120.63
+    ],
+    "velocity": [
+     -0.94,
+     -0.57
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     302.53,
+     577.94
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1142.13,
+     677.88
+    ],
+    "velocity": [
+     -0.88,
+     -0.53
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     672.39,
+     406.4
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     227.85,
+     400.37
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     519.42,
+     274.24
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "2ball_h_only_1",
+  "kind": "anchor",
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1375.0,
+     375.0
+    ],
+    "velocity": [
+     -1.2,
+     0
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1037.5,
+     375.0
+    ],
+    "velocity": [
+     -0.8,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "3ball_w_only_1",
+  "kind": "anchor",
+  "balls": [
+   {
+    "name": "E",
+    "position": [
+     1150.0,
+     687.5
+    ],
+    "velocity": [
+     -0.9,
+     -0.37
+    ]
+   },
+   {
+    "name": "A",
+    "position": [
+     1450.0,
+     150.0
+    ],
+    "velocity": [
+     -1.3,
+     0.4
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     1037.5,
+     312.5
+    ],
+    "velocity": [
+     -0.79,
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "9ball_w_only_1",
+  "kind": "anchor",
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1123.8,
+     678.71
+    ],
+    "velocity": [
+     -1.2,
+     -0.6
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     409.22,
+     344.22
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     1119.76,
+     109.53
+    ],
+    "velocity": [
+     -1.1,
+     0.4
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1048.45,
+     176.74
+    ],
+    "velocity": [
+     -1.5,
+     0.3
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     642.51,
+     461.38
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1079.28,
+     380.34
+    ],
+    "velocity": [
+     -1.2,
+     0.1
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1073.83,
+     524.38
+    ],
+    "velocity": [
+     -1.3,
+     0.1
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     740.95,
+     311.13
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     1089.65,
+     276.78
+    ],
+    "velocity": [
+     -1.3,
+     -0.1
+    ]
+   }
+  ]
+ },
+ {
+  "trial": "12ball_both_1",
+  "kind": "anchor",
+  "balls": [
+   {
+    "name": "A",
+    "position": [
+     1141.14,
+     633.39
+    ],
+    "velocity": [
+     -1.1,
+     -0.4
+    ]
+   },
+   {
+    "name": "F",
+    "position": [
+     1064.24,
+     84.49
+    ],
+    "velocity": [
+     -1.4,
+     0.6
+    ]
+   },
+   {
+    "name": "C",
+    "position": [
+     365.63,
+     285.36
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "D",
+    "position": [
+     1066.15,
+     687.62
+    ],
+    "velocity": [
+     -1.5,
+     0.0
+    ]
+   },
+   {
+    "name": "E",
+    "position": [
+     1099.81,
+     230.98
+    ],
+    "velocity": [
+     -0.9,
+     -0.3
+    ]
+   },
+   {
+    "name": "B",
+    "position": [
+     527.21,
+     326.28
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "G",
+    "position": [
+     1143.94,
+     327.91
+    ],
+    "velocity": [
+     -1.1,
+     0.0
+    ]
+   },
+   {
+    "name": "H",
+    "position": [
+     432.08,
+     423.66
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "I",
+    "position": [
+     1054.34,
+     356.5
+    ],
+    "velocity": [
+     -1.1,
+     -0.5
+    ]
+   },
+   {
+    "name": "J",
+    "position": [
+     311.84,
+     453.67
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "K",
+    "position": [
+     524.14,
+     474.77
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "L",
+    "position": [
+     585.15,
+     395.68
+    ],
+    "velocity": [
+     0.0,
+     0.0
+    ]
+   }
+  ]
+ }
+]
