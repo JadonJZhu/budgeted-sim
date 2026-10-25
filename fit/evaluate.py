@@ -165,7 +165,7 @@ def main():
     # plausible noise levels per model: settings whose full-data error is inside
     # the 95% bootstrap interval of the best fit's error
     plausible = {}
-    for n in ("full", "budget"):
+    for n in ("full", "budget", "crowding"):
         settings, P = G[n]
         _, _, sse = scale_fit(P, y, np.ones(len(y)))
         fit = np.sqrt(sse / len(y))

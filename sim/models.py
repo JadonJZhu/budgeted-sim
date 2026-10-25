@@ -57,6 +57,8 @@ class Real:
             if name in (CAUSE, TARGET):
                 continue
             p = path[(path[:, 0] >= 0) & (path[:, 0] <= 1000)]
+            if len(p) == 0:
+                continue  # never on the table, so never visible
             d = np.sqrt(((p[:, None, :] - b[None, :, :]) ** 2).sum(-1)).min()
             dist[name] = d
         return sorted(dist, key=dist.get)

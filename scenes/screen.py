@@ -22,27 +22,58 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from fit.data import HERE  # noqa: E402
 from scenes.generate import random_scene, valid  # noqa: E402
-from sim.models import Real, budget, how, whether  # noqa: E402
+from sim.models import Real, budget, how, whether, whether_crowded  # noqa: E402
 
 OUT = os.path.join(HERE, "scenes", "work")
-KINDS = ("clear", "hit", "k12", "k23")
+KINDS = ("clear", "hit", "crowd", "k12", "k23")
+
+
+def thin(values, step=None):
+    """Grid points every `step`, always keeping both ends of the range.
+    step None: the two ends and the middle."""
+    lo, hi = min(values), max(values)
+    if step is None:
+        return sorted({float(lo), float(round((lo + hi) / 2, 1)), float(hi)})
+    pts = set(np.round(np.arange(lo, hi + 1e-9, step), 1)) | {lo, hi}
+    return sorted(float(x) for x in pts)
 
 
 def settings():
+    """Plausible settings from the fit to the existing data.
+
+    The budget model's noise range is that of its winning k and rule, used for
+    every k from 1 to 3 (the spec counts k = 1 to 3 as plausible). Screening
+    uses the ends and middle of each range; confirmation uses steps of 0.2 for
+    the CSM and budget, and 0.5 for crowding noise's per-scene effective noise
+    (p changes smoothly with noise because the random draws are shared)."""
     ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
-    rule = ev["group"]["budget"]["best_setting"]["rule"]
-    full = sorted({s["theta"] for s in ev["plausible_settings"]["full"]})
-    bud = sorted({s["theta"] for s in ev["plausible_settings"]["budget"]})
-    return rule, full, bud
+    ps = ev["plausible_settings"]
+    best = ev["group"]["budget"]["best_setting"]
+    rule = best["rule"]
+    full = [s["theta"] for s in ps["full"]]
+    bud = [s["theta"] for s in ps["budget"] if s["rule"] == rule and s["k"] == best["k"]]
+    crowd = [(s["theta0"], s["theta1"]) for s in ps["crowding"]]
+    return {"rule": rule,
+            "screen": {"full": thin(full), "budget": thin(bud), "crowd_step": None},
+            "confirm": {"full": thin(full, 0.2), "budget": thin(bud, 0.2), "crowd_step": 0.5},
+            "crowd_pairs": crowd}
 
 
-def predict(real, rule, full_thetas, budget_thetas, n, seed):
-    """Every model's p at every plausible setting: dict name -> array over thetas."""
-    out = {"full": np.array([whether(real, t, n, seed) for t in full_thetas]),
-           "how": np.array([how(real)])}
+def crowd_thetas(cfg, n_balls, step):
+    eff = [t0 + t1 * (n_balls - 2) for t0, t1 in cfg["crowd_pairs"]]
+    return thin([round(e, 1) for e in eff], step)
+
+
+def predict(real, cfg, stage, n, seed):
+    """Every model's p at every plausible setting: dict name -> array over settings."""
+    st = cfg[stage]
+    out = {"full": np.array([whether(real, t, n, seed) for t in st["full"]]),
+           "how": np.array([how(real)]),
+           "crowd": np.array([whether_crowded(real, t, n, seed)
+                              for t in crowd_thetas(cfg, len(real.names), st["crowd_step"])])}
     for k in (1, 2, 3):
-        b = budget(real, k, rule)
-        out[f"k{k}"] = np.array([whether(real, t, n, seed, budget_balls=b) for t in budget_thetas])
+        b = budget(real, k, cfg["rule"])
+        out[f"k{k}"] = np.array([whether(real, t, n, seed, budget_balls=b) for t in st["budget"]])
     return out
 
 
@@ -57,6 +88,9 @@ def gaps(p):
     g["clear"] = max(-hi, lo, 0) if (hi < 0 or lo > 0) else 0.0
     lo, hi = bud.min() - how_, bud.max() - how_
     g["hit"] = max(-hi, lo, 0) if (hi < 0 or lo > 0) else 0.0
+    crowd = p["crowd"] * 100
+    lo, hi = bud.min() - crowd.max(), bud.max() - crowd.min()
+    g["crowd"] = max(-hi, lo, 0) if (hi < 0 or lo > 0) else 0.0
     d12 = (p["k1"] - p["k2"]) * 100
     d23 = (p["k2"] - p["k3"]) * 100
     g["d12_min"] = float(np.abs(d12).min()) if np.all(np.sign(d12) == np.sign(d12[0])) else 0.0
@@ -71,6 +105,8 @@ def kind_of(g, big=40, small=12):
         kinds.append("clear")
     if g["hit"] >= big:
         kinds.append("hit")
+    if g["crowd"] >= big:
+        kinds.append("crowd")
     if g["d12_min"] >= big and g["d23_max"] <= small:
         kinds.append("k12")
     if g["d23_min"] >= big and g["d12_max"] <= small:
@@ -84,9 +120,10 @@ def stage1(i):
     scene = random_scene(rng, int(rng.integers(3, 10)))
     if scene is None or valid(scene) is None:
         return None
-    rule, full_t, bud_t = CFG
     real = Real(scene)
-    p0 = predict(real, rule, [0.0], [0.0], 1, 0)
+    zero = {"zero": {"full": [0.0], "budget": [0.0], "crowd_step": None}, "rule": CFG["rule"],
+            "crowd_pairs": [(0.0, 0.0)]}
+    p0 = predict(real, zero, "zero", 1, 0)
     return {"id": i, "scene": scene, "p0": {k: v.tolist() for k, v in p0.items()},
             "a_hits_b": real.first_hit is not None and real.first_hit[0] == "B"}
 
@@ -103,9 +140,8 @@ def promising(c):
 
 def score(args):
     c, n = args
-    rule, full_t, bud_t = CFG
     real = Real(c["scene"])
-    p = predict(real, rule, full_t, bud_t, n, zlib.crc32(str(c["id"]).encode()))
+    p = predict(real, CFG, "screen" if n == 100 else "confirm", n, zlib.crc32(str(c["id"]).encode()))
     g = gaps(p)
     return {**c, f"p{n}": {k: v.tolist() for k, v in p.items()}, f"g{n}": g, f"kinds{n}": kind_of(g)}
 
@@ -118,26 +154,69 @@ def init(cfg):
     CFG = cfg
 
 
-def main(n_scenes=20000, need=5):
+NEED = {"clear": 8, "hit": 8, "crowd": 8, "k12": 4, "k23": 4}
+FINALISTS = 5  # confirm this many times the scenes each kind needs
+
+
+def margin(g, kind):
+    """How far a scene clears its kind's rule, in points."""
+    return {"clear": g["clear"], "hit": g["hit"], "crowd": g["crowd"],
+            "k12": g["d12_min"] - g["d23_max"], "k23": g["d23_min"] - g["d12_max"]}[kind]
+
+
+def run_stage(pool, items, n, path):
+    """Score items with n replays, appending each result to a JSON-lines file
+    so an interrupted run resumes where it stopped."""
+    done = {}
+    if os.path.exists(path):
+        for line in open(path):
+            c = json.loads(line)
+            done[c["id"]] = c
+    todo = [(c, n) for c in items if c["id"] not in done]
+    print(f"{n} replays: {len(done)} done, {len(todo)} to go", flush=True)
+    with open(path, "a") as f:
+        for i, c in enumerate(pool.imap_unordered(score, todo, chunksize=1)):
+            f.write(json.dumps(c) + "\n")
+            f.flush()
+            done[c["id"]] = c
+            if i % 100 == 0:
+                print(f"  {i}/{len(todo)}", flush=True)
+    return [done[c["id"]] for c in items]
+
+
+def main(n_scenes=20000):
     cfg = settings()
-    print("rule", cfg[0], "plausible theta: full", cfg[1], "budget", cfg[2], flush=True)
+    print("settings", {k: v for k, v in cfg.items() if k != "crowd_pairs"}, flush=True)
     os.makedirs(OUT, exist_ok=True)
+    prom_path = os.path.join(OUT, "promising.json")
     with Pool(initializer=init, initargs=(cfg,)) as pool:
-        cands = [c for c in pool.imap_unordered(stage1, range(n_scenes), chunksize=20) if c]
-        print("valid", len(cands), flush=True)
-        keep = [c for c in cands if promising(c)]
-        print("promising", len(keep), flush=True)
-        screened = pool.map(score, [(c, 100) for c in keep], chunksize=2)
+        if os.path.exists(prom_path):
+            saved = json.load(open(prom_path))
+            n_valid, keep = saved["n_valid"], saved["promising"]
+        else:
+            cands = [c for c in pool.imap_unordered(stage1, range(n_scenes), chunksize=500) if c]
+            keep = sorted((c for c in cands if promising(c)), key=lambda c: c["id"])
+            n_valid = len(cands)
+            json.dump({"n_generated": n_scenes, "n_valid": n_valid, "promising": keep},
+                      open(prom_path, "w"))
+        print("valid", n_valid, "promising", len(keep), flush=True)
+        screened = run_stage(pool, keep, 100, os.path.join(OUT, "screened.jsonl"))
         counts = {k: sum(k in c["kinds100"] for c in screened) for k in KINDS}
         print("screen pass counts", counts, flush=True)
-        # finalists: screen passes, plus near misses (within 10 points of a line)
-        fin = [c for c in screened if c["kinds100"] or
-               kind_of(c["g100"], big=30, small=22)]
-        confirmed = pool.map(score, [(c, 1000) for c in fin], chunksize=1)
+        # finalists: each kind's strongest screen passes, FINALISTS x what it needs
+        fin = {}
+        for kind in KINDS:
+            passing = [c for c in screened if kind in c["kinds100"]]
+            passing.sort(key=lambda c: -margin(c["g100"], kind))
+            for c in passing[: FINALISTS * NEED[kind]]:
+                fin[c["id"]] = c
+        fin = sorted(fin.values(), key=lambda c: c["id"])
+        print("finalists", len(fin), flush=True)
+        confirmed = run_stage(pool, fin, 1000, os.path.join(OUT, "confirmed.jsonl"))
     counts = {k: sum(k in c["kinds1000"] for c in confirmed) for k in KINDS}
     print("confirmed counts", counts, flush=True)
-    json.dump({"settings": cfg, "n_generated": n_scenes, "n_valid": len(cands),
-               "n_promising": len(keep), "confirmed": confirmed},
+    json.dump({"settings": cfg, "n_generated": n_scenes, "n_valid": n_valid,
+               "n_promising": len(keep), "screen_counts": counts, "confirmed": confirmed},
               open(os.path.join(OUT, "candidates.json"), "w"))
 
 
