@@ -11,38 +11,43 @@
 \titlespacing*{\section}{0pt}{6pt}{2pt}
 \titleformat*{\section}{\large\bfseries}
 \setlist{nosep,leftmargin=1.2em}
-\setlength{\parskip}{3pt}
+\setlength{\parskip}{2pt}
 \setlength{\parindent}{0pt}
 
-\title{\vspace{-2.2em}\textbf{Counterfactual simulation on a budget:\\a model of whether judgments in crowded scenes}}
+\title{\vspace{-2.2em}\textbf{Counterfactual simulation on a budget:\\a candidate account of whether judgments in crowded scenes}}
 \author{Jadon Zhu \quad \small\texttt{jadonjzhu@gmail.com} \quad \small\url{https://github.com/JadonJZhu/budgeted-sim}}
 \date{\vspace{-2.2em}}
 
 \begin{document}
 \maketitle
 
+\vspace{-0.6em}
+We ask whether people re-simulate only a few balls when they imagine a billiard scene without the cause. On the 20 videos of Lu, Bechlivanidis and Gerstenberg (2026), re-simulating one or two balls gives the lowest held-out root-mean-square error (RMSE: 18.2 rating points, against 25.1 for the counterfactual simulation model), but the gap's 95\% interval includes zero. We propose 36 scenes (32 new) in which pairs of models differ by 41 to 47 rating points on average.
+
 \section*{The question}
-Lu, Bechlivanidis and Gerstenberg (CogSci 2026) found that the whether predictions of the counterfactual simulation model (CSM; Gerstenberg et al., 2021) drift away from people as billiard scenes get crowded, while its how predictions stay accurate. In crowded scenes people's whether and how ratings become nearly the same, even in videos built so that the true answers differ. The paper reads this as people giving up costly simulation for a contact-tracing shortcut, but does not model the shortcut. The CSM's own noise, which perturbs the one ball A hit first, does not explain it. In the 9-ball whether-only video (Figure~\ref{fig:nine}), people's mean flipped whether rating is 20 while the CSM says 96, and the CSM stays between 86 and 100 at every noise level the paper fits (0 to 5 degrees). Noise on every ball whose path changes, growing with the number of balls, can fit this video; we test that version below.
+Lu, Bechlivanidis and Gerstenberg (CogSci 2026) found that the predictions of the counterfactual simulation model (CSM; Gerstenberg et al., 2021) for whether ball A made a difference to ball B drift away from people's ratings as scenes get crowded, while its predictions for how A affected B stay close. In crowded scenes people's whether and how ratings become nearly the same, even in videos built so that the true answers differ. Lu et al.\ read this merging as people giving up costly simulation for a contact-tracing shortcut, but do not model the shortcut; we test it as ``how only'' (A mattered if it reached B through a chain of contacts). Our question: when people imagine the scene without A, do they re-simulate only a few of the balls, and does a model with that limit predict their mean whether ratings better than the CSM and the shortcut?
+
+The CSM's own noise, which perturbs only the first ball A hits, does not explain the drift. In the 9-ball whether-only video (Figure~\ref{fig:nine}), A changes whether B goes in but never touches B. People's mean flipped whether rating is 20 (we flip ratings so that 100 means ``B would have missed without A''), while the CSM gives B a 96\% chance of missing without A, and 86\% to 100\% at every noise level $\theta$ the paper fits (0 to 5 degrees).
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{figures/nine_ball.pdf}
-\caption{The 9-ball whether-only video. A sends E and F away and never touches B. Without A, a full simulation sends E and F into B and B misses. Re-simulating only B and E, with F on the path A really sent it on, leaves B's way clear, which matches people's answer.}
+\includegraphics[width=0.88\textwidth,trim=0 16 0 0,clip]{figures/nine_ball.pdf}
+\caption{The 9-ball whether-only video. A sends E and F away and never touches B. Without A, a full simulation sends E and F into B, and B misses. A budget of two balls re-simulates only B and E (the first ball A hit) and replays every other ball along its real path; B then goes in, so the model says A did not matter, as people do (mean flipped rating 20).}
 \label{fig:nine}
 \end{figure}
 
 \section*{The budget model}
-We propose that when people imagine the scene without A, they re-simulate only $k$ balls, B first, and let every other ball move along the path it really took. Replayed balls still push the balls being re-simulated, but are never pushed off their own paths. Because the replayed balls already carry A's effects, with $k=1$ B's imagined path can change only if A hit B directly, and the model says A mattered only when that hit decided whether B went in. A's influence through chains of other balls drops out, which is the information people seem to lose in crowded scenes. With every ball in the budget, the model is the CSM. This fits Balaban and Ullman (2025), who found that people can update only about one moving object at a time in imagination. Lu et al.\ cite that result as a reason simulation should fail; the budget makes it part of the model. The other balls in the budget are chosen by a rule that uses only what the video shows. We tested three: the balls A touched, the balls that touched B, and the balls that came closest to B's path.
+We propose that when people imagine the scene without A, they re-simulate only $k$ balls, always including B, and replay every other ball along the path it took in the video. A replayed ball still pushes any re-simulated ball it meets, but is never pushed off its own path. Because replayed balls already carry A's effects, with $k=1$ B's imagined path can change only if A hit B directly. A 1-ball budget therefore says A mattered only when that hit decided whether B went in, and A's influence through chains of other balls drops out, which is the information people seem to lose in crowded scenes. With every ball in the budget, the model is the CSM. The other $k-1$ balls are chosen by a rule that uses only what the video shows. We tested three rules: the balls A hit, in order of contact (the best fit); the balls that hit B; and the balls whose paths came closest to B's. Noise $\theta$ goes on the first ball A hit, as in the CSM, when that ball is in the budget, and nowhere otherwise. A small budget fits Balaban and Ullman (2025), who found that people update only one moving object at a time in imagination. Lu et al.\ cite it as a reason simulation should fail; the budget builds that limit into the model.
 
 \section*{Results on the existing data}
-We wrote our own simulator from the settings in the paper and code (the repository has no licence, so we did not reuse its code). It matches the original's noise-free whether outcome and how answer in all 20 videos. At $\theta=1.9$ it correlates with mean whether ratings at $r=.670$ over 20 seeds (range .664 to .679); the original code run the same way gives .674 (range .667 to .682).
+Our simulator reproduces Lu et al.'s CSM: at the paper's $\theta=1.9$ degrees it correlates with mean whether ratings on all 20 videos at $r=.670$ (mean of 20 seeds), against .674 for their code, and its noise-free whether and how predictions match theirs in all 20 videos.
 
-Every model maps its prediction to the rating scale with a fitted line and is scored on each video after fitting the other 19 (Table~\ref{tab:loo}). The budget model fits best, with $k=2$ filled by B and the first ball A hit; that setting was chosen in all 20 folds, against budgets of 1 or 3 and against the full CSM. On held-out error alone, though, a budget of 1 does as well (18.2), so the existing data do not pin down $k$. Its error does not grow with the number of balls (Figure~\ref{fig:err}; slope $-0.8$ points per ball, 95\% interval $-2.2$ to $0.6$).
+The budget model has the lowest held-out error: RMSE 18.2 rating points against 25.1 for the CSM (Table~\ref{tab:loo}). A budget of 2, filled by B and the first other ball A hit, gave the best fit to the training videos in all 20 folds. On held-out error, though, a budget of 1 ties it (18.2), so the existing data do not pin down $k$; fit to each of the 50 participants, the best budget is 1 ball for 13 people, 2 for 25 and 3 for 12. By number of balls (Figure~\ref{fig:err}), the budget model has the lowest error at 2 and 9 balls, how only at 6 and 12, and the CSM at 3, and no model's error rises steadily.
 
 \begin{minipage}[t]{0.47\textwidth}
 \vspace{0pt}
 \centering
-\captionof{table}{Leave-one-video-out fit to mean flipped whether ratings (RMSE in rating points).}
+\captionof{table}{Held-out fit to mean flipped whether ratings: each model's settings and linear rating scale are chosen on 19 videos and scored on the 20th. RMSE in rating points; Pearson $r$. Crowding noise puts $\theta$ on every ball whose path changes, growing with the number of balls.}
 \label{tab:loo}
 \small
 \begin{tabular}{lcc}
@@ -59,20 +64,20 @@ Full CSM & 25.1 & .55 \\
 \begin{minipage}[t]{0.49\textwidth}
 \vspace{0pt}
 \centering
-\includegraphics[width=\linewidth]{figures/error_by_balls.pdf}
-\captionof{figure}{Error on held-out videos by number of balls.}
+\includegraphics[width=0.86\linewidth]{figures/error_by_balls.pdf}
+\captionof{figure}{Mean absolute error on held-out videos, by number of balls (4 videos per point).}
 \label{fig:err}
 \end{minipage}
 
 \medskip
-The advantage is not decisive. Resampling participants 1,000 times, the budget model beats the CSM in 96\% of resamples (95\% interval of the RMSE gap $-10.8$ to $+0.6$), crowding noise in 81\% and how only in 87\%. We fixed a 95\% interval excluding zero as the bar before fitting, and the result does not clear it: with 20 videos, the existing data cannot separate these models. Fitting each participant separately, the budget model fits 34\% of people best (how only 28\%, crowding noise 28\%, CSM 10\%), and the best budget across all 50 people is 1 ball for 13, 2 for 25 and 3 for 12. For cause ratings, the authors' proposed certainty-weighted combination of whether and how predicts better with the budget model's whether answers than with the CSM's (held-out RMSE 16.7 vs.\ 18.3; the whether settings themselves were fit on all 20 videos).
+The budget model's lead is not decisive: in 1,000 resamples of participants, its RMSE is lower than the CSM's in 96\% (budget minus CSM, 95\% interval $-10.8$ to $+0.6$ points), than crowding noise's in 81\% and than how only's in 87\%. No gap clears the bar we set before fitting (a 95\% interval excluding zero), so with 20 videos the existing data cannot separate these models.
 
 \input{test_section}
 
 \section*{References}
-\small
-Balaban, H., \& Ullman, T. D. (2025). The capacity limits of moving objects in the imagination. \textit{Nature Communications}.\\
-Gerstenberg, T., Goodman, N. D., Lagnado, D. A., \& Tenenbaum, J. B. (2021). A counterfactual simulation model of causal judgments for physical events. \textit{Psychological Review}.\\
+\footnotesize
+Balaban, H., \& Ullman, T. D. (2025). The capacity limits of moving objects in the imagination. \textit{Nature Communications}, 16, 5899. \quad
+Gerstenberg, T., Goodman, N. D., Lagnado, D. A., \& Tenenbaum, J. B. (2021). A counterfactual simulation model of causal judgments for physical events. \textit{Psychological Review}, 128(5). \quad
 Lu, X., Bechlivanidis, C., \& Gerstenberg, T. (2026). Causal judgments in complex situations. \textit{CogSci 2026}. Materials: \url{https://github.com/cicl-stanford/complex_causation_cogsci2026}.
 
 \end{document}

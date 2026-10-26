@@ -43,7 +43,7 @@ We simulated 200 studies of 50 participants from each model. Each fake person co
 
 ## Known weak spots
 
-- **Simple cues.** Across the 36 scenes, none of four crude cues (A's closest approach to B, number of collisions, number of balls, whether A passes within one ball width of B's path) correlates with any model's disagreement with the budget model above |r| = .3 (largest .26, after 78 rule-based swaps). A stricter line of .2 could not be met (best .28).
+- **Simple cues.** Across the 32 new scenes, none of four crude cues (A's closest approach to B, number of collisions, number of balls, whether A passes within one ball width of B's path) correlates with any model's disagreement with the budget model above |r| = .3 (largest .26, after 78 rule-based swaps). A stricter line of .2 could not be met (best .28).
 - **One-sided which-model scenes.** In all 24 which-model scenes the budget model says A did not matter, so a general lean toward that answer would favour it there. The which-setting scenes and two anchors include scenes where it says A mattered (predicted rating 83), which a lean of that kind cannot fit.
 - **Extreme predictions.** The best-fitting budget model has almost no noise, so its predictions are close to 0 or 1 in these scenes. The test is about which answers people give, not how confident they are.
 - **The scenes were checked by eye from still frames only.** Each video should be watched before the study runs.

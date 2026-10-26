@@ -74,7 +74,7 @@ def fig_nine_ball():
     draw_run(axes[0], real.run, names, upto, {"E", "F"})
     table(axes[1], "Without A, full simulation\nE and F block B: B misses")
     draw_run(axes[1], full, names, upto, {"E", "F"})
-    table(axes[2], "Without A, budget of 2 (B and E)\nF follows its real path: B goes in")
+    table(axes[2], "Without A, budget of 2 (B and E)\nall others replayed: B goes in")
     draw_run(axes[2], bud, names, upto, {"E", "F"})
     fig.tight_layout(pad=0.3, w_pad=0.6)
     save(fig, "nine_ball")

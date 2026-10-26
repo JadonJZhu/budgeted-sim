@@ -27,7 +27,7 @@ Full numbers are in `results/evaluation.json`.
 
 Remove A. Re-simulate B and up to k − 1 other balls, chosen by a rule that uses only what the real video shows (we tested three: balls A touched, balls that touched B, and balls that came closest to B's path). Every other ball is reset to its recorded position and velocity at each time step. It therefore follows its real path exactly and is never pushed off it, but it still pushes any re-simulated ball it meets, with the force of a real ball. As in the CSM, direction noise goes on the ball A hit first, if that ball is in the budget.
 
-Because the replayed balls already carry A's effects, with k = 1 B's imagined path can differ from its real path only if A hit B directly, and the model says A mattered only when that hit decided whether B went in. A's influence through chains of other balls drops out. With every ball in the budget, the model is the full CSM. In the 9-ball video below, A clears two balls (E and F) out of B's way. A full simulation without A sends E and F into B, and B misses. A budget of B and E leaves F on the path A really sent it, and B still goes in, which is what people said.
+Because the replayed balls already carry A's effects, with k = 1 B's imagined path can differ from its real path only if A hit B directly, and the model says A mattered only when that hit decided whether B went in. A's influence through chains of other balls drops out. With every ball in the budget, the model is the full CSM. In the 9-ball video below, A sends E and F away and never touches B. A full simulation without A sends E and F into B, and B misses. A budget of B and E (the first ball A hit) replays every other ball along its real path, and B goes in, which is what people said.
 
 ![The 9-ball video](writeup/figures/nine_ball.png)
 
@@ -35,19 +35,19 @@ Because the replayed balls already carry A's effects, with k = 1 B's imagined pa
 
 `scenes/final/` holds 36 videos a lab could run with the original whether question: 32 new scenes and 4 original videos as anchors. `PLAN.md` there is a pre-registration-style plan (hypotheses, analysis, pass and fail lines, known weak spots).
 
-The new scenes were chosen by fixed rules from 500,000 random scenes in the style of the originals, of which 37,167 passed the original videos' constraints. Scenes in which A or B passes within 6 pixels of another ball without touching it were left out, since a viewer could not tell whether they touched. A scene qualifies when two models' predicted probabilities differ by at least 40 points at every setting the existing data cannot rule out: budgets of 1 to 3 balls, and every noise level on the paper's grid (0 to 5 degrees) whose fit is inside the 95% bootstrap interval of the best fit's error. The budget model's noise range is that of its best budget (2), used for all three sizes. At the fitted rating scales, the which-model scenes separate the models by 41 to 47 rating points on average.
+The new scenes were chosen by fixed rules from 500,000 random scenes in the style of the originals, of which 37,167 passed the original videos' constraints. Scenes in which A or B passes within 6 pixels of another ball without touching it were left out, since a viewer could not tell whether they touched. A scene qualifies when two models' predicted probabilities differ by at least 40 points at every setting we treat as plausible: budgets of 1 to 3 balls (1 and 3 fit a little worse than 2 but are kept), and every noise level on the paper's grid (0 to 5 degrees) whose fit is inside the 95% bootstrap interval of the best fit's error. The budget model's noise range is that of its best budget (2), used for all three sizes. At the fitted rating scales, the which-model scenes separate the models by 41 to 47 rating points on average.
 
 | Kind of scene | Scenes | Budget | Full CSM | Crowding | How only |
 | --- | --- | --- | --- | --- | --- |
-| Clear the way: A removes a ball that would have blocked B | 8 | 25 | 73 | 66 | 56 |
+| Clear the way: without A, B misses in full simulation but not on a budget | 8 | 25 | 73 | 66 | 55 |
 | Budget vs. crowding noise | 8 | 25 | 66 | 69 | 50 |
-| Hit but no difference: A hits B, B would have gone in anyway | 8 | 25 | 16 | 16 | 66 |
-| Budget of 1 vs. 2, and 2 vs. 3 (half in each direction) | 8 | 25 or 83 | 48 | 56 | 66 |
+| Hit but no difference: A reaches B, but B would have gone in anyway | 8 | 25 | 16 | 16 | 66 |
+| Budget of 1 vs. 2, and 2 vs. 3 (two scenes each way per pair) | 8 | 25 or 83 | 48 | 56 | 66 |
 | Original videos | 4 | 54 | 62 | 41 | 45 |
 
 Values are each model's mean predicted rating at its best fit to the existing data (`scenes/final/summary.csv`; every setting is in `predictions.csv`).
 
-- **Simple cues:** across the 36 scenes, no crude cue (A's closest approach to B, number of collisions, number of balls, whether A passes within a ball width of B's path) correlates with any model's disagreement with the budget model above |r| = .3 (largest .26). Getting there took 78 rule-based swaps. Half-size and quarter-size sets could not get under .3, which is why the set has 36 scenes.
+- **Simple cues:** across the 32 new scenes, no crude cue (A's closest approach to B, number of collisions, number of balls, whether A passes within a ball width of B's path) correlates with any model's disagreement with the budget model above |r| = .3 (largest .26). Getting there took 78 rule-based swaps. Half-size and quarter-size sets could not get under .3, which is why the set has 36 scenes.
 - **Power:** we simulated 200 studies of 50 people from each model. Each fake person copies one real participant's slider scale and noise (fit to their 20 ratings under the generating model). The generating model won every study, and the budget size was recovered every time for budgets of 1, 2 and 3. A population mixing budgets in the proportions of the per-person fits (13, 25 and 12 people) was identified as a budget population every time, with k = 2 in 199 of 200 studies. These studies assume each person follows one model, so they show the scenes can separate the models, not that real data will be this clean.
 - **Other bars:** the same result holds with a 30 or 50 point bar instead of 40, and with a cue line of .4. A stricter cue line of .2 cannot be met (best .28).
 
