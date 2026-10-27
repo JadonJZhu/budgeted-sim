@@ -2,12 +2,18 @@
 
 A candidate account of why people's judgments of whether ball A made a difference to ball B drift away from the counterfactual simulation model (CSM) in crowded scenes, building on Lu, Bechlivanidis & Gerstenberg (CogSci 2026). The idea: when people imagine the scene without A, they re-simulate only a few balls.
 
-**Start with the two-page write-up, [`writeup/writeup.pdf`](writeup/writeup.pdf).** It explains the question, the model, the results on the original 20 videos and the proposed test. This README covers only what is in the repository and how to rerun it.
+## Where to look
 
-## What is here
-
-- **Test scenes:** `scenes/final/` holds the 36 videos proposed in the write-up (32 new scenes and 4 original videos), a plan a lab could adopt (`PLAN.md`), and every model's predictions for each scene (`predictions.csv`, `summary.csv`).
-- **Results:** `results/evaluation.json` has the write-up's results on the original 20 videos, plus some the write-up leaves out for space: fits to each participant (`per_person`) and a model of the cause ratings (`cause`). The scene-selection runs at other settings are the other files in `results/`.
+| If you want | Look at |
+| --- | --- |
+| The question, the model, the results and the proposed study, explained | [`writeup/writeup.pdf`](writeup/writeup.pdf) (two pages) |
+| The 36 proposed test videos | `scenes/final/videos/` |
+| A plan a lab could adopt for running them | `scenes/final/PLAN.md` |
+| Every model's predictions for each test scene | `scenes/final/predictions.csv` (every setting) and `scenes/final/summary.csv` (each model at its best fit) |
+| Results on the original 20 videos, including some the write-up leaves out (fits to each participant, a model of the cause ratings) | `results/evaluation.json` |
+| Scene selection at other settings | the other files in `results/` |
+| How our simulator was built and checked | [Our simulator](#our-simulator), below |
+| The code | [Repository layout](#repository-layout) and [Reproducing](#reproducing), below |
 
 ## Our simulator
 
