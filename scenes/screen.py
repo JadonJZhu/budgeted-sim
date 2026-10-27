@@ -1,9 +1,10 @@
 """Generate, filter, screen and select the test scenes.
 
-Usage: python scenes/screen.py  (reads results/evaluation.json for the
-plausible settings and the winning selection rule)
+Usage: python scenes/screen.py [n_scenes]  (500000 for the included results;
+reads results/evaluation.json for the plausible settings and the winning
+selection rule)
 
-Stages, as in the spec:
+Stages:
 1. Generate random scenes with 3 to 9 balls and keep the valid ones.
 2. Noiseless pre-check: one run per model at noise 0 to find scenes where the
    models could disagree at all (a cheap way to skip hopeless candidates).
@@ -42,7 +43,7 @@ def settings():
     """Plausible settings from the fit to the existing data.
 
     The budget model's noise range is that of its winning k and rule, used for
-    every k from 1 to 3 (the spec counts k = 1 to 3 as plausible). Screening
+    every k from 1 to 3 (all three sizes count as plausible). Screening
     uses the ends and middle of each range; confirmation uses steps of 0.2 for
     the CSM and budget, and 0.5 for crowding noise's per-scene effective noise
     (p changes smoothly with noise because the random draws are shared)."""
@@ -170,11 +171,11 @@ def direction(p, kind):
     return None
 
 
-def slots(kind):
+def slots(kind, need=NEED):
     """(direction, scenes needed) for a kind."""
     if kind in ("k12", "k23"):
-        return [("up", NEED[kind] // 2), ("down", NEED[kind] - NEED[kind] // 2)]
-    return [(None, NEED[kind])]
+        return [("up", need[kind] // 2), ("down", need[kind] - need[kind] // 2)]
+    return [(None, need[kind])]
 
 
 def margin(g, kind):
@@ -203,14 +204,14 @@ def run_stage(pool, items, n, path):
     return [done[c["id"]] for c in items]
 
 
-def main(n_scenes=20000):
+def main(n_scenes=500000):
     cfg = settings()
     print("settings", {k: v for k, v in cfg.items() if k != "crowd_pairs"}, flush=True)
     os.makedirs(OUT, exist_ok=True)
     prom_path = os.path.join(OUT, "promising.json")
     with Pool(initializer=init, initargs=(cfg,)) as pool:
-        if os.path.exists(prom_path):
-            saved = json.load(open(prom_path))
+        saved = json.load(open(prom_path)) if os.path.exists(prom_path) else None
+        if saved is not None and saved["n_generated"] == n_scenes:
             n_valid, keep = saved["n_valid"], saved["promising"]
         else:
             cands = [c for c in pool.imap_unordered(stage1, range(n_scenes), chunksize=500) if c]
@@ -220,8 +221,8 @@ def main(n_scenes=20000):
                       open(prom_path, "w"))
         print("valid", n_valid, "promising", len(keep), flush=True)
         screened = run_stage(pool, keep, 100, os.path.join(OUT, "screened.jsonl"))
-        counts = {k: sum(k in c["kinds100"] for c in screened) for k in KINDS}
-        print("screen pass counts", counts, flush=True)
+        screen_counts = {k: sum(k in c["kinds100"] for c in screened) for k in KINDS}
+        print("screen pass counts", screen_counts, flush=True)
         # finalists: each kind's strongest screen passes, FINALISTS x what it needs
         fin = {}
         for kind in KINDS:
@@ -234,10 +235,10 @@ def main(n_scenes=20000):
         fin = sorted(fin.values(), key=lambda c: c["id"])
         print("finalists", len(fin), flush=True)
         confirmed = run_stage(pool, fin, 1000, os.path.join(OUT, "confirmed.jsonl"))
-    counts = {k: sum(k in c["kinds1000"] for c in confirmed) for k in KINDS}
-    print("confirmed counts", counts, flush=True)
-    json.dump({"settings": cfg, "n_generated": n_scenes, "n_valid": n_valid,
-               "n_promising": len(keep), "screen_counts": counts, "confirmed": confirmed},
+    confirmed_counts = {k: sum(k in c["kinds1000"] for c in confirmed) for k in KINDS}
+    print("confirmed counts", confirmed_counts, flush=True)
+    json.dump({"settings": cfg, "n_generated": n_scenes, "n_valid": n_valid, "n_promising": len(keep),
+               "screen_counts": screen_counts, "confirmed_counts": confirmed_counts, "confirmed": confirmed},
               open(os.path.join(OUT, "candidates.json"), "w"))
 
 

@@ -11,9 +11,11 @@
  "small": 12.0,
  "cue_line": 0.3,
  "qualifying": {
-  "2": 25,
-  "1": 13,
-  "3": 12
+  "clear": 69,
+  "hit": 78,
+  "crowd": 65,
+  "k12": 19,
+  "k23": 17
  },
  "chosen": {
   "clear": [

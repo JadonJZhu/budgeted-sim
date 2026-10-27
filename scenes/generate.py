@@ -10,7 +10,7 @@ Start positions and speeds follow the ranges in the original 20 videos:
 """
 import numpy as np
 
-from sim.physics import GATE_Y, RADIUS, STEP_LIMIT, WIDTH, on_table, simulate
+from sim.physics import GATE_Y, RADIUS, WIDTH, on_table, simulate
 
 NAMES = "ABCDEFGHIJKLMNOP"
 GATE_MARGIN = 10  # pixels of clearance past the ball's edge at the gate
@@ -49,7 +49,7 @@ def random_scene(rng, n_balls):
 
 
 def valid(scene):
-    """The filter from the spec. Returns the real run if the scene passes, else None."""
+    """The validity filter. Returns the real run if the scene passes, else None."""
     run = simulate(scene, record=True)
     if not run.went_in:
         return None

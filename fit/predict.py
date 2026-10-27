@@ -4,7 +4,8 @@ Output: results/predictions.csv with columns
     video, model, k, rule, theta, p
 model 1 (full CSM), 2 (crowding noise; theta here is the per-video effective
 noise theta0 + theta1 x (balls - 2)), 3 (how only), 4 (budget).
-Replay i of a video uses the same random draws in every model and setting.
+Replay i of a video uses the same random draws in models 1 and 4 at every
+setting. Model 2 uses its own draws (one per ball), shared across its settings.
 """
 import os
 import sys

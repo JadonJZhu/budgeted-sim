@@ -135,6 +135,8 @@ def simulate(scene, *, leave_out=(), noise=None, replay=None, record=False,
         paths = np.zeros((STEP_LIMIT + 1, len(bodies), 2))
         vels = np.zeros((STEP_LIMIT + 1, len(bodies), 2))
 
+    # The original also counts B as in if it has left at step 701; we stop at
+    # 700. The noise-free outcomes of all 20 videos are the same either way.
     while step <= STEP_LIMIT:
         for entry in noisy:
             body, start, rad, ref = entry

@@ -6,7 +6,6 @@ uses the same standard normal draws, scaled by theta, so p changes smoothly
 with theta and differences between settings are not sampling noise.
 """
 import json
-from functools import lru_cache
 
 import numpy as np
 

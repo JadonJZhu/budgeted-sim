@@ -1,7 +1,8 @@
 """Choose the final test scenes from the confirmed candidates, check simple
 cues, and run model recovery.
 
-Usage: python scenes/select.py [big small cue]   (defaults 40 12 .3)
+Usage: python scenes/select.py [big small cue [scale]]  (defaults 40 12 .3 1; scale
+multiplies the scenes needed per kind)
 
 Selection is by fixed rules, so no scene is picked by hand:
 - Scenes where A or B passes within 6 pixels of another ball without touching
@@ -25,12 +26,12 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from fit.data import HERE, balls, ratings, scenes  # noqa: E402
+from fit.data import HERE, balls, ratings  # noqa: E402
 from fit.evaluate import full_fit, grids, scale_fit  # noqa: E402
 from scenes.recovery import recover, recover_mixed  # noqa: E402
 from scenes.screen import KINDS, NEED, crowd_thetas, direction, gaps, kind_of, margin, slots  # noqa: E402
 from sim.models import Real  # noqa: E402
-from sim.physics import simulate  # noqa: E402
+from sim.physics import RADIUS, WIDTH, simulate  # noqa: E402
 
 WORK = os.path.join(HERE, "scenes", "work")
 ANCHORS = ["2ball_h_only_1", "3ball_w_only_1", "9ball_w_only_1", "12ball_both_1"]
@@ -51,8 +52,8 @@ def unclear_contact(scene):
             if b == a or frozenset((a, b)) in touched:
                 continue
             pa, pb = run.paths[a][:end], pb[:end]
-            on = (pa[:, 0] > 0) & (pa[:, 0] < 1000) & (pb[:, 0] > 0) & (pb[:, 0] < 1000)
-            if on.any() and np.hypot(*(pa[on] - pb[on]).T).min() < 60 + NEAR_MISS:
+            on = (pa[:, 0] > 0) & (pa[:, 0] < WIDTH) & (pb[:, 0] > 0) & (pb[:, 0] < WIDTH)
+            if on.any() and np.hypot(*(pa[on] - pb[on]).T).min() < 2 * RADIUS + NEAR_MISS:
                 return True
     return False
 
@@ -69,19 +70,19 @@ def qualifying(cands, big, small):
     return out
 
 
-def pick(qual, used=()):
+def pick(qual, need, used=()):
     chosen, used = {}, set(used)
-    for kind in NEED:
+    for kind in need:
         got = []
-        for d, need in slots(kind):
+        for d, n in slots(kind, need):
             pool = [c for m, c in qual[kind] if direction(c["p1000"], kind) == d]
             bins = [[c for c in pool if lo <= len(c["scene"]) <= hi] for lo, hi in BINS]
             part = []
-            while len(part) < need and any(bins):
+            while len(part) < n and any(bins):
                 for b in bins:
                     while b and b[0]["id"] in used:
                         b.pop(0)
-                    if b and len(part) < need:
+                    if b and len(part) < n:
                         c = b.pop(0)
                         part.append(c)
                         used.add(c["id"])
@@ -95,7 +96,8 @@ def cues(c):
     a, b = real.paths["A"], real.paths["B"]
     n = min(len(a), len(b))
     ab = np.hypot(*(a[:n] - b[:n]).T).min()
-    near = np.sqrt(((a[:, None, :] - b[None, :, :]) ** 2).sum(-1)).min() < 60 + 60
+    # A's path passes within 120 pixels (two ball widths, center to center) of B's path
+    near = np.sqrt(((a[:, None, :] - b[None, :, :]) ** 2).sum(-1)).min() < 4 * RADIUS
     return {"closest_A_B": ab, "collisions": len(real.run.contacts),
             "balls": len(c["scene"]), "A_near_B_path": float(near)}
 
@@ -145,10 +147,10 @@ def all_cue_r(df):
             for c in CUES for g in GAPS if df[c].std() > 0 and df[g].std() > 0}
 
 
-def cue_check(qual, line, max_swaps=300):
+def cue_check(qual, line, need, max_swaps=300):
     """Swap scenes (same kind and direction, next in line) until no cue passes
     the line, or no swap helps."""
-    chosen = pick(qual)
+    chosen = pick(qual, need)
     swaps, dropped = 0, set()
     while True:
         df = cue_table(chosen)
@@ -176,11 +178,10 @@ def cue_check(qual, line, max_swaps=300):
 
 # ---------- model recovery on the chosen scenes plus the anchors
 
-def recovery_grids(chosen, cfg, pred, G_orig, videos):
-    """Each model's p over its plausible settings, on new scenes then anchors."""
+def recovery_grids(chosen, cfg, ps, G_orig, videos):
+    """Each model's p over its plausible settings (ps, from evaluation.json),
+    on new scenes then anchors."""
     new = [c for cs in chosen.values() for c in cs]
-    ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
-    ps = ev["plausible_settings"]
     full_t = cfg["confirm"]["full"]
     bud_t = cfg["confirm"]["budget"]
     idx = [videos.index(v) for v in ANCHORS]
@@ -236,15 +237,13 @@ def generators(models, G_orig, y, rule):
 
 
 def main(big=40, small=12, line=0.3, write=True, scale=1.0):
-    base = {"clear": 8, "hit": 8, "crowd": 8, "k12": 4, "k23": 4}
-    for k, v in base.items():
-        NEED[k] = max(2 if k in ("k12", "k23") else 1, int(round(v * scale)))
+    need = {k: max(2 if k in ("k12", "k23") else 1, int(round(v * scale))) for k, v in NEED.items()}
     data = json.load(open(os.environ.get("CANDIDATES", os.path.join(WORK, "candidates.json"))))
     cfg = data["settings"]
     qual = qualifying(data["confirmed"], big, small)
     counts = {k: len(v) for k, v in qual.items()}
     print("qualifying at", big, small, counts, flush=True)
-    chosen, df, worst, swaps = cue_check(qual, line)
+    chosen, df, worst, swaps = cue_check(qual, line, need)
     print("chosen", {k: len(v) for k, v in chosen.items()}, "worst cue r", worst, "swaps", swaps, flush=True)
 
     pred = pd.read_csv(os.path.join(HERE, "results", "predictions.csv"), keep_default_na=False)
@@ -253,24 +252,24 @@ def main(big=40, small=12, line=0.3, write=True, scale=1.0):
     wide = W.pivot_table(index="person", columns="video", values="rating")[videos]
     y = wide.mean().to_numpy()
     G = grids(pred, videos)
-    models = recovery_grids(chosen, cfg, pred, G, videos)
+    ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
+    models = recovery_grids(chosen, cfg, ev["plausible_settings"], G, videos)
     gens = generators(models, G, y, cfg["rule"])
     rec = recover(models, gens, wide.to_numpy())
     print("recovery", rec, flush=True)
     # a population mixing budget sizes in the proportions of the per-person fits
-    ev = json.load(open(os.path.join(HERE, "results", "evaluation.json")))
-    counts = {int(k): v for k, v in ev["per_person"]["k_counts_all"].items()}
-    parts = [(counts.get(k, 0), g[3], g[4]) for g in gens if g[1] == "budget" for k in [g[2]]]
+    k_counts = {int(k): v for k, v in ev["per_person"]["k_counts_all"].items()}
+    parts = [(k_counts.get(k, 0), p_new, p_orig) for _, model, k, p_new, p_orig in gens if model == "budget"]
     mixed = recover_mixed(models, parts, wide.to_numpy())
-    print("mixed-k population", counts, mixed, flush=True)
+    print("mixed-k population", k_counts, mixed, flush=True)
     passed = all(v["model_share"] >= 0.9 and (v["k_share"] is None or v["k_share"] >= 0.8)
                  for v in rec.values())
-    result = {"scale": scale, "need": dict(NEED), "big": big, "small": small, "cue_line": line, "qualifying": counts,
+    result = {"scale": scale, "need": need, "big": big, "small": small, "cue_line": line, "qualifying": counts,
               "chosen": {k: [c["id"] for c in v] for k, v in chosen.items()},
               "worst_cue": [float(worst[0]), worst[1], worst[2]], "swaps": swaps,
               "cue_r": all_cue_r(df),
               "recovery": rec, "recovery_passed": passed,
-              "mixed_k_population": {"k_shares": counts, **mixed}}
+              "mixed_k_population": {"k_shares": k_counts, **mixed}}
     if write:
         tag = f"{big:g}_{small:g}_{line:g}" + ("" if scale == 1 else f"_x{scale:g}")
         out = os.path.join(HERE, "results", f"selection_{tag}.json")

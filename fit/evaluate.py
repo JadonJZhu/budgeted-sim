@@ -1,9 +1,11 @@
 """Fit and compare the models on people's whether ratings (and cause ratings).
 
 Reads results/predictions.csv (from fit/predict.py) and writes
-results/evaluation.json plus a few CSV tables. Every comparison uses
-leave-one-video-out error: settings, the selection rule and the linear scale
-are chosen on 19 videos and scored on the 20th.
+results/evaluation.json plus a few CSV tables. The group model comparisons
+use leave-one-video-out error: settings, the selection rule and the linear
+scale are chosen on 19 videos and scored on the 20th. The other analyses use
+fits to all 20 videos: the cause-rating analysis uses each whether model's
+best setting, and the per-person fits fix the budget model's selection rule.
 """
 import json
 import os

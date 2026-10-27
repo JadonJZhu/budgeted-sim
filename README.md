@@ -11,7 +11,7 @@ A candidate account of why people's judgments of whether ball A made a differenc
 | A plan a lab could adopt for running them | `scenes/final/PLAN.md` |
 | Every model's predictions for each test scene | `scenes/final/predictions.csv` (every setting) and `scenes/final/summary.csv` (each model at its best fit) |
 | Results on the original 20 videos, including some the write-up leaves out (fits to each participant, a model of the cause ratings) | `results/evaluation.json` |
-| Scene selection at other settings | the other files in `results/` |
+| Scene selection at other settings | `results/selection_*.json` and `results/cues_*.csv` |
 | How our simulator was built and checked | [Our simulator](#our-simulator), below |
 | The code | [Repository layout](#repository-layout) and [Reproducing](#reproducing), below |
 
@@ -26,14 +26,14 @@ Checks against the original:
 
 ## Repository layout
 
-| Folder | Contents |
+| Path | Contents |
 | --- | --- |
 | `FACTSHEET.md` | The settings our simulator is built from, with sources |
 | `sim/` | Physics (`physics.py`) and the models (`models.py`) |
 | `fit/` | Prediction grid (`predict.py`), fitting and evaluation (`evaluate.py`), reproduction check (`reproduce.py`) |
 | `scenes/` | Scene generator, validity filter, screening and selection, model recovery, rendering |
 | `analysis/` | Figures |
-| `results/` | Predictions, fits and bootstrap results |
+| `results/` | Predictions, fits and bootstrap results. In `predictions.csv`, model 1 is the full CSM, 2 crowding noise (θ is that video's effective noise level), 3 how only and 4 the budget model |
 | `writeup/` | The two-page write-up and its figures |
 
 ## Reproducing
@@ -51,6 +51,7 @@ python analysis/figures.py
 python scenes/screen.py 500000          # generate, filter, screen, confirm; about 10 hours on 8 cores
 python scenes/select.py 40 12 0.3       # choose scenes, cue check, model recovery (uses the included scenes/work/candidates.json)
 python scenes/finalize.py results/selection_40_12_0.3.json
+python scenes/render.py scenes/final/test_scenes.json scenes/final/videos   # the 36 videos
 ```
 
 ## Credit

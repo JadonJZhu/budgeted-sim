@@ -5,7 +5,9 @@ Usage: python scenes/finalize.py results/selection_40_12_0.3.json
 Outputs, in scenes/final/:
 - test_scenes.json: the new scenes in the original study's format
   ([{"trial": name, "balls": [...]}]); anchors keep their original names
-- predictions.csv: every model's p at every plausible setting, per scene
+- predictions.csv: every model's p, per scene. New scenes carry the plausible
+  settings as confirmed (scenes/screen.py); anchors carry the full fitted grid
+  from results/predictions.csv (budget rows for the winning rule only)
 - summary.csv: per scene, each model's predicted rating at its best fit to
   the existing data (rating = a + b x p)
 """
