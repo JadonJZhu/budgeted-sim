@@ -6,7 +6,7 @@ A candidate account of why people's judgments of whether ball A made a differenc
 
 | If you want | Look at |
 | --- | --- |
-| The question, the model, the results and the proposed study, explained | [`writeup/writeup.pdf`](writeup/writeup.pdf) (two pages) |
+| The question, the model, the results and the proposed study | [`writeup/writeup.pdf`](writeup/writeup.pdf) (two pages) |
 | The 36 proposed test videos | `scenes/final/videos/` |
 | A plan a lab could adopt for running them | `scenes/final/PLAN.md` |
 | Every model's predictions for each test scene | `scenes/final/predictions.csv` (every setting) and `scenes/final/summary.csv` (each model at its best fit) |
